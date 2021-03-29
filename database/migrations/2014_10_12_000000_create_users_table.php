@@ -14,9 +14,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('uuid',45);
-            $table->text('json')->nullable();
+            $table->uuid('id')->primary();
             $table->string('name',45)->nullable();
             $table->string('lastname',45)->nullable();
             $table->string('email')->unique();
@@ -24,20 +22,23 @@ class CreateUsersTable extends Migration
             $table->string('displayName', 100)->nullable();
             $table->mediumText('LastMs')->nullable();
             $table->string('slug', 70)->nullable();
-            $table->string('status',45)->nullable();
             $table->string('nicname',45)->nullable();
             $table->string('about',45)->nullable();
             $table->string('temporalTocken')->nullable();
             $table->tinyInteger('onlyDelete')->nullable();
             $table->integer('town')->nullable();
             $table->string('photo')->nullable();
-            $table->char('language')->nullable();
             $table->char('especialParam')->nullable();
+            $table->char('pago')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password',45)->nullable();
+            $table->string('password')->nullable();
             $table->rememberToken()->nullable();
+            $table->text('html')->nullable();
+            $table->text('json')->nullable();
+            $table->string('language')->nullable();
+            $table->boolean('status')->nullable();
             $table->timestamps();
-            $table->softDeletes($column = 'deleted_at', $precision = 0);
+            $table->softDeletes();
         });
     }
 
