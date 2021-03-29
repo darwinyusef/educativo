@@ -28,6 +28,9 @@ class CreateContentTable extends Migration
             $table->integer('urlInbox',255)->nullable();
             $table->text('meta')->nullable();
             $table->text('json')->nullable();
+            $table->boolean('status')->nullable();
+            $table->string('language')->nullable();
+
 
             $table->timestamps();
         });
