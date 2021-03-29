@@ -28,7 +28,10 @@ class CreateCourseTable extends Migration
             $table->integer('subject',255)->nullable();
             $table->string('parentId',100)->nullable();
             $table->string('notification',100)->nullable();
+            $table->boolean('status')->nullable();
+            $table->string('language')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -30,9 +30,9 @@ class CreateContentTable extends Migration
             $table->text('json')->nullable();
             $table->boolean('status')->nullable();
             $table->string('language')->nullable();
-
-
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 
