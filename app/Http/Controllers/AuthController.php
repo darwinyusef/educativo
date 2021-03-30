@@ -17,7 +17,7 @@ class AuthController extends Controller
         $user = User::where('email' , 'wsgestor@gmail.com')->first();
 
         if($user){
-            $success['token'] =  $user->createToken('yusefPruebita', ['*', 'user:create', 'user:active']);
+            $success['token'] =  $user->createToken('yusefP2', ['*', 'user:create', 'user:active']);
             return response()->json(['success' => $success]);
         }else{
             return response()->json(['error'=>'Unauthorised'], 401);

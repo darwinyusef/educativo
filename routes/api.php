@@ -22,8 +22,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('pass', 'App\Http\Controllers\AuthController@index')->name('home');
 Route::get('crear/token', 'App\Http\Controllers\AuthController@creadito');
 
-Route::middleware('auth:sanctum')->get('/pruebita', function(){
-    return 1;
+Route::middleware(['auth:sanctum'])->get('/pruebita', function(){
+    return 'Entramos sin problemas con sactrum';
 });
 
 

@@ -20,3 +20,4 @@ Route::get('/', function () {
 Route::get('/primer', function () {
     return view('welcome');
 });
+
