@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->mediumText('LastMs')->nullable();
             $table->string('slug', 70)->nullable();
             $table->string('nicname',45)->nullable();
-            $table->string('about',45)->nullable();
+            $table->text('about')->nullable();
             $table->string('temporalTocken')->nullable();
             $table->tinyInteger('onlyDelete')->nullable();
             $table->integer('town')->nullable();
