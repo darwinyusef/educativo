@@ -17,8 +17,8 @@ class CreateTaxonoableTable extends Migration
             $table->id();
             $table->string('uuid')->unique();
             $table->integer('taxonoables_id')->unsigned()->nullable();
-            $table->integer('taxonoableable_id');
-            $table->string('taxonoableable_type');
+            $table->integer('taxonoableable_id')->nullable();
+            $table->string('taxonoableable_type')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

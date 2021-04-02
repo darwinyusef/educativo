@@ -17,8 +17,8 @@ class CreateFileableTable extends Migration
             $table->id();
             $table->string('uuid')->unique();
             $table->integer('fileables_id')->unsigned()->nullable();
-            $table->integer('fileableable_id');
-            $table->string('fileableable_type');
+            $table->integer('fileableable_id')->nullable();
+            $table->string('fileableable_type')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

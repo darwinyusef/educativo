@@ -17,8 +17,8 @@ class CreateLinkeableTable extends Migration
             $table->id();
             $table->string('uuid')->unique();
             $table->integer('links_id')->unsigned()->nullable();
-            $table->integer('linkeable_id');
-            $table->string('linkeable_type');
+            $table->integer('linkeable_id')->nullable();
+            $table->string('linkeable_type')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -17,8 +17,8 @@ class CreateParametreableTable extends Migration
             $table->id();
             $table->string('uuid')->unique();
             $table->integer('parameters_id')->unsigned()->nullable();
-            $table->integer('parameteable_id');
-            $table->string('parameteable_type');
+            $table->integer('parameteable_id')->nullable();
+            $table->string('parameteable_type')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
