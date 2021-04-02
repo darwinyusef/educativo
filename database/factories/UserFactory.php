@@ -32,7 +32,7 @@ class UserFactory extends Factory
             'LastMs' => null,
             'slug' => Str::slug($this->faker->firstName),
             'nicname' => $this->faker->userName,
-            'about' => $this->faker->text(100),
+            'about' => $this->faker->text(40),
             'temporalTocken' => null,
             'onlyDelete' => null,
             'town' => $this->faker->numberBetween(1, 70),

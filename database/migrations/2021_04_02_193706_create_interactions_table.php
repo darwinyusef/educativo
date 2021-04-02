@@ -16,6 +16,7 @@ class CreateInteractionsTable extends Migration
         Schema::create('interactions', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique();
+            $table->string('slug', 100)->nullable();
             $table->text('interaction')->nullable();
             $table->text('response')->nullable();
             $table->text('context')->nullable();

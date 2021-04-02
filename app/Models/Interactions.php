@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Interactions extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'uuid', 'interaction', 'response', 'context', 'value', 'notification', 'users_id', 'courses_id',
+    ];
 }

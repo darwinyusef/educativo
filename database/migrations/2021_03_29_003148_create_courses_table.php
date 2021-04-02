@@ -20,10 +20,11 @@ class CreateCoursesTable extends Migration
             $table->string('excerpt',100)->nullable();
             $table->string('course',100)->nullable();
             $table->text('description')->nullable();
-            $table->string('classroom',100)->nullable();
+            $table->string('classroom')->nullable();
             $table->string('level',100)->nullable();
             $table->string('descriptionTask',100)->nullable();
             $table->string('amountTask',100)->nullable();
+            $table->dateTime('timeOut')->nullable();
             $table->integer('calification')->nullable();
             $table->integer('subject')->nullable();
             $table->string('notification',100)->nullable();

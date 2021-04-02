@@ -22,8 +22,8 @@ class CreateParamsTable extends Migration
             $table->text('settings')->nullable();
             $table->string('url')->nullable();
             $table->integer('value')->nullable();
-            $table->dateTime('time_in')->nullable();
-            $table->dateTime('time_out')->nullable();
+            $table->dateTime('timeIn')->nullable();
+            $table->dateTime('timeOut')->nullable();
             $table->enum('context', ['core', 'api', 'structure', 'web', 'mobile', 'state', 'admin', 'enum', 'unique', 'personal', 'frecuency', 'publicity']);
             $table->tinyInteger('autoload')->nullable();
             $table->string('frecuency')->nullable();

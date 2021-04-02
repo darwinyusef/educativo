@@ -16,7 +16,7 @@ class CreateLinksTable extends Migration
         Schema::create('links', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique();
-            $table->string('url');
+            $table->string('url')->nullable();
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->string('notes')->nullable();
@@ -26,6 +26,7 @@ class CreateLinksTable extends Migration
             $table->string('visible')->nullable();
             $table->integer('parent')->nullable();
             $table->string('param')->nullable();
+            $table->string('language')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

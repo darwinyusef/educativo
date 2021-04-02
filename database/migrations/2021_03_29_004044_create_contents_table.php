@@ -24,7 +24,7 @@ class CreateContentsTable extends Migration
             $table->string('excerpt',100)->nullable();
             $table->string('view',100)->nullable();
             $table->integer('order')->nullable();
-            $table->integer('urlInbox')->nullable();
+            $table->string('urlInbox')->nullable();
             $table->dateTime('timeIn')->nullable();
             $table->dateTime('timeOut')->nullable();
             $table->text('confParameter')->nullable();
