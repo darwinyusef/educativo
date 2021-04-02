@@ -14,7 +14,8 @@ class CreateComunicationsTable extends Migration
     public function up()
     {
         Schema::create('comunications', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
+            $table->string('uuid')->unique();
             $table->string('title')->nullable();
             $table->string('description')->nullable();
             $table->datetime('expiration')->nullable();

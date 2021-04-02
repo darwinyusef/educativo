@@ -14,12 +14,13 @@ class CreateTaxonomiesTable extends Migration
     public function up()
     {
         Schema::create('taxonomies', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
+            $table->string('uuid')->unique();
             $table->string('taxonomy');
             $table->text('description')->nullable();
             $table->text('meta')->nullable();
             $table->enum('type', ['category', 'item', 'tag', 'publicity', 'external', 'landingpage'])->nullable();
-            $table->integer('parent')->nullable();
+            $table->integer('parent')->nullable()->unsigned();
             $table->text('html')->nullable();
             $table->text('json')->nullable();
             $table->string('language')->nullable();

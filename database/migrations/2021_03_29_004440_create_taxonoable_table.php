@@ -14,7 +14,8 @@ class CreateTaxonoableTable extends Migration
     public function up()
     {
         Schema::create('taxonoable', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
+            $table->string('uuid')->unique();
             $table->integer('taxonoables_id')->unsigned()->nullable();
             $table->integer('taxonoableable_id');
             $table->string('taxonoableable_type');

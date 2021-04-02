@@ -14,7 +14,8 @@ class CreateParamsTable extends Migration
     public function up()
     {
         Schema::create('params', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
+            $table->string('uuid')->unique();
             $table->string('param_key');
             $table->text('param_value');
             $table->string('slug', 70)->nullable();
@@ -26,6 +27,7 @@ class CreateParamsTable extends Migration
             $table->enum('context', ['core', 'api', 'structure', 'web', 'mobile', 'state', 'admin', 'enum', 'unique', 'personal', 'frecuency', 'publicity']);
             $table->tinyInteger('autoload')->nullable();
             $table->string('frecuency')->nullable();
+            $table->integer('parent')->nullable()->unsigned();
             $table->char('especial')->nullable();
             $table->text('html')->nullable();
             $table->text('json')->nullable();

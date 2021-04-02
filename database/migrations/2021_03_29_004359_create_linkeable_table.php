@@ -14,7 +14,8 @@ class CreateLinkeableTable extends Migration
     public function up()
     {
         Schema::create('linkeable', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
+            $table->string('uuid')->unique();
             $table->integer('links_id')->unsigned()->nullable();
             $table->integer('linkeable_id');
             $table->string('linkeable_type');

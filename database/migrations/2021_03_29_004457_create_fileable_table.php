@@ -14,7 +14,8 @@ class CreateFileableTable extends Migration
     public function up()
     {
         Schema::create('fileable', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
+            $table->string('uuid')->unique();
             $table->integer('fileables_id')->unsigned()->nullable();
             $table->integer('fileableable_id');
             $table->string('fileableable_type');

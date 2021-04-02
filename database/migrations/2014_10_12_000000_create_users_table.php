@@ -14,15 +14,16 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('name',45)->nullable();
-            $table->string('lastname',45)->nullable();
+            $table->id();
+            $table->string('uuid')->unique();
+            $table->string('name', 45)->nullable();
+            $table->string('lastname', 45)->nullable();
             $table->string('email')->unique();
-            $table->string('mobile',45)->nullable();
+            $table->string('mobile', 45)->nullable();
             $table->string('displayName', 100)->nullable();
             $table->mediumText('LastMs')->nullable();
             $table->string('slug', 70)->nullable();
-            $table->string('nicname',45)->nullable();
+            $table->string('nicname', 45)->nullable();
             $table->text('about')->nullable();
             $table->string('temporalTocken')->nullable();
             $table->tinyInteger('onlyDelete')->nullable();
@@ -41,6 +42,8 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
         });
     }
+
+
 
     /**
      * Reverse the migrations.

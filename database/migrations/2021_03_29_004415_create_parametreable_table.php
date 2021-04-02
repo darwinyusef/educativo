@@ -14,7 +14,8 @@ class CreateParametreableTable extends Migration
     public function up()
     {
         Schema::create('parametreable', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
+            $table->string('uuid')->unique();
             $table->integer('parameters_id')->unsigned()->nullable();
             $table->integer('parameteable_id');
             $table->string('parameteable_type');

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCourseTable extends Migration
+class CreateCoursesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,25 @@ class CreateCourseTable extends Migration
      */
     public function up()
     {
-        Schema::create('course', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+        Schema::create('courses', function (Blueprint $table) {
+            $table->id();
+            $table->string('uuid')->unique();
             $table->string('slug',100)->nullable();
             $table->string('excerpt',100)->nullable();
             $table->string('course',100)->nullable();
             $table->text('description')->nullable();
-            $table->string('room',100)->nullable();
+            $table->string('classroom',100)->nullable();
             $table->string('level',100)->nullable();
             $table->string('descriptionTask',100)->nullable();
             $table->string('amountTask',100)->nullable();
             $table->integer('calification')->nullable();
-            $table->text('json')->nullable();
-            $table->integer('subject',255)->nullable();
-            $table->string('parentId',100)->nullable();
+            $table->integer('subject')->nullable();
             $table->string('notification',100)->nullable();
+            $table->text('meta')->nullable();
+            $table->text('json')->nullable();
+            $table->text('html')->nullable();
             $table->boolean('status')->nullable();
+            $table->integer('parent')->nullable();
             $table->string('language')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -42,6 +45,6 @@ class CreateCourseTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('course');
+        Schema::dropIfExists('courses');
     }
 }
