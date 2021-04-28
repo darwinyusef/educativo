@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -28,3 +29,7 @@ Route::middleware(['auth:sanctum'])->get('/pruebita', function(){
 
 
 Route::get('login', [ 'as' => 'login', 'uses' => 'AuthController@login']);
+
+
+Route::get('/user/{id}', [UserController::class, 'show']);
+Route::get('/user', [UserController::class, 'index']);

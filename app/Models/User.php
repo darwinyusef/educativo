@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use \Laravel\Sanctum\HasApiTokens;
+use \Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -20,25 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id',
-        'name',
-        'lastname',
-        'email',
-        'mobile',
-        'displayName',
-        'LastMs',
-        'slug',
-        'nicname',
-        'about',
-        'temporalTocken',
-        'onlyDelete',
-        'town',
-        'photo',
-        'especialParam',
-        'pago',
-        'email_verified_at',
-        'password',
-        'language',
+        'id', 'name', 'lastname', 'email', 'mobile', 'displayName', 'LastMs', 'slug', 'nicname', 'about', 'temporalTocken', 'onlyDelete', 'town', 'photo', 'especialParam', 'pago', 'email_verified_at', 'password', 'language',
     ];
 
     /**
@@ -60,8 +43,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /******************
+     * Container with relationships.
+     *******************/
+
     public function files()
     {
         return $this->morphToMany(Files::class, 'fileable');
+    }
+
+
+    /******************
+     * Container with scopes.
+     *******************/
+
+
+    public function scopeLastname($query, $totalName)
+    {
+        if($totalName != ""){
+            $query->where(DB::raw("CONCAT(name, ' ', lastname)"), 'LIKE',  "%$totalName%");
+        }
     }
 }

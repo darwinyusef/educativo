@@ -22,10 +22,12 @@ class CreateInteractionsTable extends Migration
             $table->text('context')->nullable();
             $table->integer('value')->nullable();
             $table->string('notification', 100)->nullable();
-            $table->unsignedBigInteger('users_id')->nullable();
-            $table->foreign('users_id')->references('id')->on('users');
-            $table->unsignedBigInteger('courses_id')->nullable();
-            $table->foreign('courses_id')->references('id')->on('courses');
+            $table->text('meta')->nullable();
+            $table->text('json')->nullable();
+            $table->text('html')->nullable();
+            $table->boolean('status')->nullable();
+            $table->integer('parent')->nullable();
+            $table->string('language')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

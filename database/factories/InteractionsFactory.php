@@ -29,8 +29,6 @@ class InteractionsFactory extends Factory
             'context' => $this->faker->sentence(4, true),
             'value' =>  $this->faker->numberBetween(0, 60),
             'notification' => $this->faker->word,
-            'users_id' => $this->faker->numberBetween(1, 10),
-            'courses_id' =>  $this->faker->numberBetween(1, 10),
         ];
     }
 }

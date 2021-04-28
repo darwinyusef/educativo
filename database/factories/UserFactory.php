@@ -25,6 +25,7 @@ class UserFactory extends Factory
         return [
             'uuid' => Str::uuid(),
             'name' => $this->faker->name,
+            'cardId' => $this->faker->numberBetween(1110000000, 1110999999),
             'lastname' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
             'mobile' => $this->faker->phoneNumber,
