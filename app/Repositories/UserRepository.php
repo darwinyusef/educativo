@@ -4,10 +4,13 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Http\Resources\UserCollection;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository
 {
     protected $user;
+    protected $paginate = 10;
 
     /**
      * UserRepository constructor.
@@ -17,6 +20,7 @@ class UserRepository
     public function __construct(User $user)
     {
         $this->user = $user;
+        $this->paginate = 10;
     }
 
     /**
@@ -26,14 +30,16 @@ class UserRepository
      */
     public function getAll($request)
     {
-        $paginate = 10;
         if ($request->paginate) {
-            $paginate = $request->paginate;
+            $this->paginate = $request->paginate;
         }
-        return new UserCollection( $this->user
-                                        ->lastname($request->lastname)
-                                        ->paginate($paginate)
-                                 );
+
+        return new UserCollection(
+            $this->user
+                ->card($request->card)
+                ->name($request->name)
+                ->paginate($this->paginate)
+        );
     }
 
     /**
@@ -44,7 +50,8 @@ class UserRepository
      */
     public function getById($id)
     {
-        return $this->user->find($id);
+       $find = $this->user->uuid($id)->select('id', 'uuid')->get();
+       return $this->user->find($find[0]->id);
     }
 
     /**
@@ -57,8 +64,17 @@ class UserRepository
     {
         $user = new $this->user;
 
-        $user->title = $data['title'];
-        $user->description = $data['description'];
+        $user->uuid = Str::uuid();
+        $user->name = $data['name'];
+        $user->lastname = $data['lastname'];
+        $user->cardId = $data['cardId'];
+        $user->email = $data['email'];
+        $user->mobile = $data['mobile'];
+        $user->password = Hash::make($data['password']);
+        $user->displayName = $data['name'] . ' ' . $data['lastname'];
+        $user->slug = Str::slug($data['name'] . ' ' . $data['lastname']);
+        $user->nicname = $data['nicname'];
+        $user->about = $data['about'];
         $user->save();
 
         return $user->fresh();
@@ -73,8 +89,15 @@ class UserRepository
     public function update($data, $id)
     {
         $user = $this->user->find($id);
-        $user->title = $data['title'];
-        $user->description = $data['description'];
+        $user->name = $data['name'];
+        $user->lastname = $data['lastname'];
+        $user->cardId = $data['cardId'];
+        $user->email = $data['email'];
+        $user->mobile = $data['mobile'];
+        $user->displayName = $data['name'] . ' ' . $data['lastname'];
+        $user->slug = Str::slug($data['name'] . ' ' . $data['lastname']);
+        $user->nicname = $data['nicname'];
+        $user->about = $data['about'];
         $user->update();
         return $user;
     }
@@ -89,6 +112,33 @@ class UserRepository
     {
         $user = $this->user->find($id);
         $user->delete();
+        return $user;
+    }
+
+
+    /**
+     * Update User
+     *
+     * @param $data
+     * @return User
+     */
+    public function totalDelete($id)
+    {
+        $user = $this->user->find($id);
+        $user->forceDelete();
+        return $user;
+    }
+
+    /**
+     * Update User
+     *
+     * @param $data
+     * @return User
+     */
+    public function restoreDelete($id)
+    {
+        $user = $this->user->find($id);
+        $user->restore();
         return $user;
     }
 }

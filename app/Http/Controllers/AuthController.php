@@ -8,11 +8,10 @@ use App\Models\User;
 class AuthController extends Controller
 {
     public function index(){
-        User::find('65465-6546-4654')->update(['password'=> bcrypt(123456)]);
-        dd ( 1 );
+        //$listo = User::find('65465-6546-4654')->update(['password'=> bcrypt(123456)]);
     }
 
-    public function creadito(){
+    public function login(){
 
         $user = User::where('email' , 'wsgestor@gmail.com')->first();
 
@@ -25,8 +24,4 @@ class AuthController extends Controller
 
     }
 
-
-    public function login(){
-        return 1;
-    }
 }

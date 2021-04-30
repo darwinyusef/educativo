@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Services\UserService;
 use Exception;
 use Illuminate\Http\Request;
-use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Log;
 
+
+use App\Http\Resources\UserResource;
 class UserController extends Controller
 {
     /**
@@ -33,13 +35,13 @@ class UserController extends Controller
     public function index(Request $request)
     {
         try {
-            $result = $this->userService->getAll($request);
-            $status = 200;
+            $result = ['status' => 200, 'content' => $this->userService->getAll($request)];
         } catch (Exception $e) {
-            $result = ['error' => $e->getMessage()];
-            $status = 500;
+            $mensaje = $e->getMessage() . ' [Error]: UserController index';
+            Log::error($mensaje);
+            $result = ['error' => $mensaje, 'status' => 500];
         }
-        return response()->json($result, 200);
+        return response()->json($result, $result['status']);
     }
 
     /**
@@ -50,18 +52,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->only([
-            'title',
-            'description',
-        ]);
+        $data = $request->only(['name', 'lastname', 'cardId', 'email', 'mobile', 'displayName', 'nicname',
+            'about', 'password']);
+
         $result = ['status' => 200];
         try {
             $result['data'] = $this->userService->saveUserData($data);
         } catch (Exception $e) {
-            $result = [
-                'status' => 500,
-                'error' => $e->getMessage()
-            ];
+            $mensaje = $e->getMessage() . ' [Error]: UserController store';
+            Log::error($mensaje);
+            $result = ['status' => 500, 'error' => $mensaje];
         }
         return response()->json($result, $result['status']);
     }
@@ -75,14 +75,13 @@ class UserController extends Controller
     public function show($id)
     {
         $result = ['status' => 200];
-
         try {
+            HelperController::validateUuid($id);
             return new UserResource($this->userService->getById($id));
         } catch (Exception $e) {
-            $result = [
-                'status' => 500,
-                'error' => $e->getMessage()
-            ];
+            $mensaje = $e->getMessage() . ' [Error]: UserController show';
+            Log::error($mensaje);
+            $result = ['status' => 500, 'error' => $mensaje];
         }
         return response()->json($result, $result['status']);
     }
@@ -96,21 +95,17 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->only([
-            'title',
-            'description'
-        ]);
+        $data = $request->only(['name', 'lastname', 'cardId', 'email', 'mobile', 'nicname', 'about', 'language', 'town', 'status']);
+
         $result = ['status' => 200];
         try {
             $result['data'] = $this->userService->updateUser($data, $id);
         } catch (Exception $e) {
-            $result = [
-                'status' => 500,
-                'error' => $e->getMessage()
-            ];
+            $mensaje = $e->getMessage() . ' [Error]: UserController update';
+            Log::error($mensaje);
+            $result = ['status' => 500, 'error' => $mensaje];
         }
         return response()->json($result, $result['status']);
-
     }
 
     /**
@@ -119,16 +114,35 @@ class UserController extends Controller
      * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
+    {
+        $data = $request->only(['deleteForever']);
+        $result = ['status' => 200];
+        try {
+            $result['data'] = $this->userService->deleteById($data, $id);
+        } catch (Exception $e) {
+            $mensaje = $e->getMessage() . ' [Error]: UserController destroy';
+            Log::error($mensaje);
+            $result = ['status' => 500, 'error' => $mensaje];
+        }
+        return response()->json($result, $result['status']);
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(Request $request, $id)
     {
         $result = ['status' => 200];
         try {
-            $result['data'] = $this->userService->deleteById($id);
+            $result['data'] = $this->userService->restoreById($id);
         } catch (Exception $e) {
-            $result = [
-                'status' => 500,
-                'error' => $e->getMessage()
-            ];
+            $mensaje = $e->getMessage() . ' [Error]: UserController restore';
+            Log::error($mensaje);
+            $result = ['status' => 500, 'error' => $mensaje];
         }
         return response()->json($result, $result['status']);
     }

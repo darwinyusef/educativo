@@ -19,6 +19,8 @@ class UserResource extends JsonResource
             'uuid' => $this->uuid,
             'name' => $this->name,
             'lastname' => $this->lastname,
+            'cardId' => $this->cardId,
+            'fullName' => $this->cardId.' '.$this->name.' '.$this->lastname,
             'email' => $this->email,
             'mobile' => $this->mobile,
             'displayName' => $this->displayName,
@@ -31,5 +33,6 @@ class UserResource extends JsonResource
             'language' => $this->language,
             'status' => $this->status
         ];
+
     }
 }

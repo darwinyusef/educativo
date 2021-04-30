@@ -8,12 +8,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use \Laravel\Sanctum\HasApiTokens;
 use \Illuminate\Support\Facades\DB;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+    use HasRoles;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id', 'name', 'lastname', 'email', 'mobile', 'displayName', 'LastMs', 'slug', 'nicname', 'about', 'temporalTocken', 'onlyDelete', 'town', 'photo', 'especialParam', 'pago', 'email_verified_at', 'password', 'language',
+        'id','uuid', 'name', 'lastname', 'cardId', 'email', 'mobile', 'displayName', 'LastMs', 'slug', 'nicname', 'about', 'temporalTocken', 'onlyDelete', 'town', 'photo', 'especialParam', 'pago', 'email_verified_at', 'password', 'language',
     ];
 
     /**
@@ -57,10 +61,24 @@ class User extends Authenticatable
      * Container with scopes.
      *******************/
 
-
-    public function scopeLastname($query, $totalName)
+    public function scopeUuid($query, $uuid)
     {
-        if($totalName != ""){
+        if ($uuid != "") {
+            $query->where("uuid", 'LIKE' ,"%$uuid%");
+        }
+    }
+    public function scopeCard($query, $number)
+    {
+        if ($number != "") {
+            if (is_numeric($number)) {
+                $query->where('cardId', $number);
+            }
+        }
+    }
+
+    public function scopeName($query, $totalName)
+    {
+        if ($totalName != "") {
             $query->where(DB::raw("CONCAT(name, ' ', lastname)"), 'LIKE',  "%$totalName%");
         }
     }

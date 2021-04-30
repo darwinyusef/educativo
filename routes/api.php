@@ -15,21 +15,20 @@ use App\Models\User;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('login', 'App\Http\Controllers\AuthController@login');
+
+
+// para incluir en los subdominios es / en -> Route::domain('{account}.example.com')->group(function () {
+
+Route::middleware('auth:sanctum')->group(function () {
+
+    Route::resource('users', UserController::class)->names('user');
+    Route::get('users/{uuid}/restore', [UserController::class, 'restore']);
+
+    Route::get('/pruebita', function(){
+        return 'Entramos sin problemas con sactrum';
+    });
 });
 
 
-Route::get('pass', 'App\Http\Controllers\AuthController@index')->name('home');
-Route::get('crear/token', 'App\Http\Controllers\AuthController@creadito');
 
-Route::middleware(['auth:sanctum'])->get('/pruebita', function(){
-    return 'Entramos sin problemas con sactrum';
-});
-
-
-Route::get('login', [ 'as' => 'login', 'uses' => 'AuthController@login']);
-
-
-Route::get('/user/{id}', [UserController::class, 'show']);
-Route::get('/user', [UserController::class, 'index']);

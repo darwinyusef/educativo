@@ -7,6 +7,7 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -34,8 +35,14 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        if( config('paramslist.sentry-logs') ){
+            $this->reportable(function (Throwable $e) {
+                if ($this->shouldReport($e) && app()->bound('sentry')) {
+                    app('sentry')->captureException($e);
+                }
+            });
+        }else{
+            $this->reportable(function (Throwable $e) { });
+        }
     }
 }
