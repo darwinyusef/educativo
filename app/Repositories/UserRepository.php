@@ -2,8 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Models\User;
 use App\Http\Resources\UserCollection;
+use App\Http\Resources\UserResource;
+use App\Models\User;
+
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 class UserRepository
 {
     protected $user;
-    protected $paginate = 10;
+    protected $paginate;
 
     /**
      * UserRepository constructor.
@@ -52,7 +54,7 @@ class UserRepository
     public function getById($id)
     {
        $find = $this->user->uuid($id)->select('id', 'uuid')->get();
-       return $this->user->find($find[0]->id);
+       return new UserResource($this->user->find($find[0]->id));
     }
 
     /**
