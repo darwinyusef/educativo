@@ -30,24 +30,23 @@ class AuthController extends Controller
     public function login()
     {
 
-        $user = User::where('email', 'pe@gmail.com')->first();
+        $user = User::where('email', 'wsgestor@gmail.com')->first();
 
-        foreach ($user->tokens as $token) {
-           $disc =  $token->abilities[0];
-        }
-        // $rol = $user->getRoleNames();
-        //$permission = $user->getPermissionsViaRoles();
-        return  $user;
+
         // if ($user) {
-        //     $success['token'] =  $user->createToken('yusefP2', ['*', 'user:create', 'user:active']);
+        //  $success['token'] =  $user->createToken('yusefP2', ['*', 'user:create', 'user:active']);
+
+        //     return ['token' => $success['token']->plainTextToken];
         //     return response()->json(['success' => $success]);
         // } else {
         //     return response()->json(['error' => 'Unauthorised'], 401);
         // }
+        $user->assignRole('admin');
     }
 
 
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
 
         $data = $request->only(['email', 'nickname', 'status', 'password']);
 
@@ -59,6 +58,5 @@ class AuthController extends Controller
             $result = ['error' => $mensaje, 'status' => 500];
         }
         return response()->json($result, $result['status']);
-
     }
 }

@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\Links::factory(10)->create();
         \App\Models\Comunications::factory(10)->create();
         \App\Models\Interactions::factory(10)->create();
+        \App\Models\Post::factory(100)->create();
     }
 }

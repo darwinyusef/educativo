@@ -30,6 +30,7 @@ class CreateCoursesTable extends Migration
             $table->integer('calification')->nullable();
             $table->integer('subject')->nullable();
             $table->string('notification',100)->nullable();
+            $table->integer('send')->nullable();
             $table->text('meta')->nullable();
             $table->text('json')->nullable();
             $table->text('html')->nullable();

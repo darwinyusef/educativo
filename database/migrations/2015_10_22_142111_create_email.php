@@ -14,16 +14,17 @@ class CreateEmail extends Migration
     public function up()
     {
         Schema::create('email', function(Blueprint $table){
-            $table->increments('id');
-            $table->string('asunto');
-            $table->longText('contenido');
-            $table->integer('sent');
-            $table->string('from');
-            $table->string('to');
-            $table->string('cc');
-            $table->string('idType');
-            $table->enum('type', ['service','assigned', 'problem', 'new_user', 'create', 'edit', 'delete','calendar', 'comment']);
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->id();
+            $table->string('uuid')->unique();
+            $table->string('asunto')->nullable();
+            $table->longText('contenido')->nullable();
+            $table->integer('sent')->nullable();
+            $table->string('from')->nullable();
+            $table->string('to')->nullable();
+            $table->string('cc')->nullable();
+            $table->string('idType')->nullable();
+            $table->enum('type', ['service','assigned', 'problem', 'new_user', 'create', 'edit', 'delete','calendar', 'comment'])->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
