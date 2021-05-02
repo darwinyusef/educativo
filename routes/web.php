@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InstalationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/primer', function () {
+    return view('welcome');
+});
+
+// prueba debug sentry
+Route::get('/debug-sentry', function () {
+    throw new Exception('My first Sentry error!');
+});
+
+Route::get('install', [InstalationController::class, 'getInstalation']);

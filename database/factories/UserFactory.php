@@ -23,11 +23,26 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
+            'uuid' => Str::uuid(),
             'name' => $this->faker->name,
+            'cardId' => $this->faker->numberBetween(1110000000, 1110999999),
+            'lastname' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
+            'mobile' => $this->faker->phoneNumber,
+            'displayName' => $this->faker->name. " " .$this->faker->lastName,
+            'LastMs' => null,
+            'slug' => Str::slug($this->faker->firstName),
+            'nicname' => $this->faker->userName,
+            'about' => $this->faker->text(40),
+            'temporalTocken' => null,
+            'onlyDelete' => null,
+            'town' => $this->faker->numberBetween(1, 70),
+            'photo' => $this->faker->imageUrl(400, 400),
+            'especialParam' => null,
+            'pago' => null,
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'password' => bcrypt(123456),
+            'language' => 'en,es'
         ];
     }
 

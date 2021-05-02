@@ -15,14 +15,36 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('uuid')->unique();
+            $table->string('name', 45)->nullable();
+            $table->string('lastname', 45)->nullable();
+            $table->integer('cardId')->nullable();
             $table->string('email')->unique();
+            $table->string('mobile', 45)->nullable();
+            $table->string('displayName', 100)->nullable();
+            $table->mediumText('LastMs')->nullable();
+            $table->string('slug', 70)->nullable();
+            $table->string('nicname', 45)->nullable();
+            $table->text('about')->nullable();
+            $table->string('temporalTocken')->nullable();
+            $table->tinyInteger('onlyDelete')->nullable();
+            $table->integer('town')->nullable();
+            $table->string('photo')->nullable();
+            $table->char('especialParam')->nullable();
+            $table->char('pago')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->rememberToken()->nullable();
+            $table->text('html')->nullable();
+            $table->text('json')->nullable();
+            $table->string('language')->nullable();
+            $table->boolean('status')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
+
+
 
     /**
      * Reverse the migrations.
