@@ -3,12 +3,12 @@
 namespace App\Services;
 
 use App\Repositories\UserRepository;
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\HelperController;
 
+use Exception;
 use InvalidArgumentException;
 
 class UserService
@@ -128,19 +128,17 @@ class UserService
         try {
             HelperController::validateUuid($id);
             $findUser = $this->userRepository->getById($id);
-            if($data == []){
+            if ($data == []) {
                 $data['deleteForever'] = 'no';
                 $user = $this->userRepository->delete($findUser->id);
             }
 
-            if( $data['deleteForever'] == 'si'){
+            if ($data['deleteForever'] == 'si') {
                 $user = $this->userRepository->totalDelete($findUser->id);
             }
-
-
         } catch (Exception $e) {
             DB::rollBack();
-            throw new InvalidArgumentException($e.'Al borrar el usuario');
+            throw new InvalidArgumentException($e . 'Al borrar el usuario');
         }
 
         DB::commit();
@@ -160,7 +158,7 @@ class UserService
 
         try {
             HelperController::validateUuid($id);
-            $findUser = $this->userRepository->getById($id);
+            $findUser = $this->userRepository->getByIdWithTrashed($id);
             $user = $this->userRepository->restore($findUser->id);
         } catch (Exception $e) {
             DB::rollBack();
@@ -170,5 +168,31 @@ class UserService
         DB::commit();
 
         return $user;
+    }
+
+
+    /**
+     * Validate user data.
+     * Store to DB if there are no errors.
+     *
+     * @param array $data
+     * @return String
+     */
+    public function registerUserData($data)
+    {
+        $validator = Validator::make($data, [
+            'email' => 'required|unique:users|email',
+            'nicname' => 'required',
+            'password' => 'required|string|min:6',
+            'status' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            throw new InvalidArgumentException($validator->errors()->first());
+        }
+
+        $result = $this->userRepository->register($data);
+
+        return $result;
     }
 }

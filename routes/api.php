@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,7 +16,8 @@ use App\Models\User;
 |
 */
 
-Route::get('login', 'App\Http\Controllers\AuthController@login');
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
 
 
 // para incluir en los subdominios es / en -> Route::domain('{account}.example.com')->group(function () {

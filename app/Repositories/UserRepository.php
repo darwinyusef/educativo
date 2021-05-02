@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Http\Resources\UserCollection;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
@@ -77,7 +78,60 @@ class UserRepository
         $user->about = $data['about'];
         $user->save();
 
+        $user->assignRole('user');
         return $user->fresh();
+    }
+
+
+    /**
+     * Register User
+     *
+     * @param $data
+     * @return User
+     */
+    public function register($data)
+    {
+        $user = new $this->user;
+
+        $user->uuid = Str::uuid();
+        $user->email = $data['email'];
+        $user->password = Hash::make($data['password']);
+        $user->nicname = $data['nicname'];
+        $user->save();
+
+        $rol = null;
+        if ('user' == $data['status']) {
+            $user->assignRole('user');
+            $rol = 'user';
+        }
+
+        if ('student' == $data['status']) {
+            $user->assignRole('student');
+            $rol = 'student';
+        }
+
+        if ('teacher' == $data['status']) {
+            $user->assignRole('teacher');
+            $rol = 'teacher';
+        }
+
+        if ('contributor' == $data['status']) {
+            $user->assignRole('contributor');
+            $rol = 'contributor';
+        }
+
+        if ('author' == $data['status']) {
+            $user->assignRole('author');
+            $rol = 'author';
+        }
+
+        if ($user->fresh()) {
+            $success['token'] =  $user->createToken($data['nicname'], [$rol]);
+            return [$user->fresh(), 200];
+        } else {
+            return [null, 401];
+        }
+
     }
 
     /**
@@ -98,7 +152,9 @@ class UserRepository
         $user->slug = Str::slug($data['name'] . ' ' . $data['lastname']);
         $user->nicname = $data['nicname'];
         $user->about = $data['about'];
+
         $user->update();
+
         return $user;
     }
 
@@ -129,15 +185,28 @@ class UserRepository
         return $user;
     }
 
+
+    /**
+     * Get user by id
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getByIdWithTrashed($id)
+    {
+       $find = $this->user->withTrashed()->uuid($id)->select('id', 'uuid')->get();
+       return $this->user->withTrashed()->find($find[0]->id);
+    }
+
     /**
      * Update User
      *
      * @param $data
      * @return User
      */
-    public function restoreDelete($id)
+    public function restore($id)
     {
-        $user = $this->user->find($id);
+        $user = $this->user->withTrashed()->find($id);
         $user->restore();
         return $user;
     }

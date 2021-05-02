@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InstalationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,3 +26,5 @@ Route::get('/primer', function () {
 Route::get('/debug-sentry', function () {
     throw new Exception('My first Sentry error!');
 });
+
+Route::get('install', [InstalationController::class, 'getInstalation']);
