@@ -74,7 +74,7 @@ class UserRepository
         $user->password = Hash::make($data['password']);
         $user->displayName = $data['name'] . ' ' . $data['lastname'];
         $user->slug = Str::slug($data['name'] . ' ' . $data['lastname']);
-        $user->nicname = $data['nicname'];
+        $user->nickname = $data['nickname'];
         $user->about = $data['about'];
         $user->save();
 
@@ -96,7 +96,7 @@ class UserRepository
         $user->uuid = Str::uuid();
         $user->email = $data['email'];
         $user->password = Hash::make($data['password']);
-        $user->nicname = $data['nicname'];
+        $user->nickname = $data['nickname'];
         $user->save();
 
         $rol = null;
@@ -126,7 +126,7 @@ class UserRepository
         }
 
         if ($user->fresh()) {
-            $success['token'] =  $user->createToken($data['nicname'], [$rol]);
+            $success['token'] =  $user->createToken($data['nickname'], [$rol]);
             return [$user->fresh(), 200];
         } else {
             return [null, 401];
@@ -150,7 +150,7 @@ class UserRepository
         $user->mobile = $data['mobile'];
         $user->displayName = $data['name'] . ' ' . $data['lastname'];
         $user->slug = Str::slug($data['name'] . ' ' . $data['lastname']);
-        $user->nicname = $data['nicname'];
+        $user->nickname = $data['nickname'];
         $user->about = $data['about'];
 
         $user->update();

@@ -49,7 +49,7 @@ class AuthController extends Controller
 
     public function register(Request $request) {
 
-        $data = $request->only(['email', 'nicname', 'status', 'password']);
+        $data = $request->only(['email', 'nickname', 'status', 'password']);
 
         try {
             $result = ['status' => 200, 'content' => $this->userService->registerUserData($data)];

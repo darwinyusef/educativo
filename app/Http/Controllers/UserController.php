@@ -52,7 +52,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->only(['name', 'lastname', 'cardId', 'email', 'mobile', 'displayName', 'nicname',
+        $data = $request->only(['name', 'lastname', 'cardId', 'email', 'mobile', 'displayName', 'nickname',
             'about', 'password']);
 
         $result = ['status' => 200];
@@ -95,7 +95,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->only(['name', 'lastname', 'cardId', 'email', 'mobile', 'nicname', 'about', 'language', 'town', 'status']);
+        $data = $request->only(['name', 'lastname', 'cardId', 'email', 'mobile', 'nickname', 'about', 'language', 'town', 'status']);
 
         $result = ['status' => 200];
         try {
