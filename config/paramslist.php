@@ -5,6 +5,10 @@ use Illuminate\Support\Str;
 // Parametros Globales que afectan a toda la aplicación
 return [
     'sentry:logs' => true,
+    'aprobed:email' => [
+        'principal' => 'wsgestor@gmail.com',
+        'no:reply' => 'no-reply@aquicreamos.com',
+    ],
     'metas' => [
         'meta:tags' => true,
         'analitics' => true,
