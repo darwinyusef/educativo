@@ -5,6 +5,9 @@ use Illuminate\Support\Str;
 // Parametros Globales que afectan a toda la aplicación
 return [
     'sentry:logs' => true,
+    'tratamiento' => 'http://google.com',
+    'autoDelete' => 'http://data.com/',
+    'verifyEmail' => 'http://data.com/',
     'aprobed:email' => [
         'principal' => 'wsgestor@gmail.com',
         'no:reply' => 'no-reply@aquicreamos.com',

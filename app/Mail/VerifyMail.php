@@ -28,7 +28,7 @@ class VerifyMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('mails.verifyMail')->subject('Verifique su Email - Notification')->from( config('paramslist.aprobed:email.no:reply') )
+        return $this->view('mails.theme')->subject('Verifique su Email - Notification')->from( config('paramslist.aprobed:email.no:reply') )
                     ->cc( config('paramslist.aprobed:email.principal') );
     }
 }

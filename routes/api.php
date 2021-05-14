@@ -16,7 +16,7 @@ use App\Models\User;
 |
 */
 
-Route::post('login', [AuthController::class, 'loginStore']);
+Route::post('login', [AuthController::class, 'create']);
 Route::post('register', [AuthController::class, 'registerStore']);
 
 

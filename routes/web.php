@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InstalationController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,3 +29,5 @@ Route::get('/debug-sentry', function () {
 });
 
 Route::get('install', [InstalationController::class, 'getInstalation']);
+
+Route::get('mail', [AuthController::class, 'mail']);
