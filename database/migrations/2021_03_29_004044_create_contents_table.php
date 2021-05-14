@@ -33,6 +33,7 @@ class CreateContentsTable extends Migration
             $table->string('classroomText')->nullable();
             $table->string('address')->nullable();
             $table->integer('timeLine')->nullable();
+            $table->integer('send')->nullable();
             $table->text('meta')->nullable();
             $table->text('json')->nullable();
             $table->text('html')->nullable();

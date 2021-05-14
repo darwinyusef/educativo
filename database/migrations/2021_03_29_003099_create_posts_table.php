@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePostTable extends Migration
+class CreatePostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePostTable extends Migration
      */
     public function up()
     {
-        Schema::create('post', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique();
             $table->string('slug',100)->nullable();
@@ -23,13 +23,10 @@ class CreatePostTable extends Migration
             $table->integer('views')->nullable();
             $table->string('password')->nullable();
             $table->string('url')->nullable();
-            $table->enum('context', ['attachment','page','post','revision','portfolio','directory','publicity','course','homework','reading','leader','poadcast','video']);
+            $table->enum('context', ['attachment','page','post','revision','portfolio','directory','publicity','course','homework','reading','leader','poadcast','video'])->nullable();
             $table->enum('state', ['published', 'draft', 'pending review'])->nullable();
             $table->dateTime('time_in')->nullable();
             $table->dateTime('time_out')->nullable();
-            $table->integer('parent')->nullable();
-            $table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('notification',100)->nullable();
             $table->text('meta')->nullable();
             $table->text('json')->nullable();
@@ -37,12 +34,11 @@ class CreatePostTable extends Migration
             $table->boolean('status')->nullable();
             $table->integer('parent')->nullable();
             $table->string('language')->nullable();
-
+            $table->integer('send')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();
-
-
-            $table->timestamps();
         });
     }
 
@@ -53,6 +49,6 @@ class CreatePostTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post');
+        Schema::dropIfExists('posts');
     }
 }

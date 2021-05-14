@@ -87,7 +87,10 @@ class InstalationController extends Controller
                 'install:admin',
                 // users
                 'create:user', 'store:user', 'update:user', 'delete:user',
-                'deleteForever:user', 'collection:user', 'find:user', 'restore:user'
+                'deleteForever:user', 'collection:user', 'find:user', 'restore:user',
+                // post
+                'create:post', 'store:post', 'update:post', 'delete:post',
+                'deleteForever:post', 'collection:post', 'find:post', 'restore:post'
             ];
 
 

@@ -65,7 +65,7 @@ class UserService
             'lastname' => 'required|string',
             'cardId' => 'required|numeric',
             'mobile' => 'required|numeric',
-            'nicname' => 'required'
+            'nickname' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -102,7 +102,7 @@ class UserService
             'cardId' => 'required|numeric',
             'email' => 'required|unique:users|email',
             'mobile' => 'required|numeric',
-            'nicname' => 'required',
+            'nickname' => 'required',
             'password' => 'required|string|min:6'
         ]);
 
@@ -182,7 +182,7 @@ class UserService
     {
         $validator = Validator::make($data, [
             'email' => 'required|unique:users|email',
-            'nicname' => 'required',
+            'nickname' => 'required',
             'password' => 'required|string|min:6',
             'status' => 'required'
         ]);

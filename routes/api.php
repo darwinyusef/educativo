@@ -16,8 +16,8 @@ use App\Models\User;
 |
 */
 
-Route::post('login', [AuthController::class, 'login']);
-Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'create']);
+Route::post('register', [AuthController::class, 'registerStore']);
 
 
 // para incluir en los subdominios es / en -> Route::domain('{account}.example.com')->group(function () {

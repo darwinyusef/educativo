@@ -7,8 +7,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-
-use App\Http\Resources\UserResource;
 class UserController extends Controller
 {
     /**
@@ -24,6 +22,12 @@ class UserController extends Controller
      */
     public function __construct(UserService $userService)
     {
+        $this->middleware(['permission:update:user'])->only(['update']);
+        $this->middleware(['permission:restore:user'])->only(['restore']);
+        $this->middleware(['permission:store:user'])->only(['store']);
+        $this->middleware(['permission:collection:user'])->only(['index']);
+        $this->middleware(['permission:find:user'])->only(['show']);
+        $this->middleware(['permission:delete:user'])->only(['destroy']);
         $this->userService = $userService;
     }
 
@@ -52,8 +56,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->only(['name', 'lastname', 'cardId', 'email', 'mobile', 'displayName', 'nicname',
-            'about', 'password']);
+        $data = $request->only(['name', 'lastname', 'cardId', 'email', 'mobile',
+         'displayName', 'nickname', 'about', 'password']);
 
         $result = ['status' => 200];
         try {
@@ -77,7 +81,7 @@ class UserController extends Controller
         $result = ['status' => 200];
         try {
             HelperController::validateUuid($id);
-            return new UserResource($this->userService->getById($id));
+            return $this->userService->getById($id);
         } catch (Exception $e) {
             $mensaje = $e->getMessage() . ' [Error]: UserController show';
             Log::error($mensaje);
@@ -95,7 +99,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->only(['name', 'lastname', 'cardId', 'email', 'mobile', 'nicname', 'about', 'language', 'town', 'status']);
+        $data = $request->only(['name', 'lastname', 'cardId', 'email', 'mobile', 'nickname', 'about', 'language', 'town', 'status']);
 
         $result = ['status' => 200];
         try {
