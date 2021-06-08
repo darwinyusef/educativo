@@ -5,12 +5,23 @@ use Illuminate\Support\Str;
 // Parametros Globales que afectan a toda la aplicación
 return [
     'sentry:logs' => true,
-    'tratamiento' => 'http://google.com',
-    'autoDelete' => 'http://data.com/',
-    'verifyEmail' => 'http://data.com/',
+    'tratamiento' => env('APP_URL'),
+    'autoDelete' => env('APP_URL').'/api/autodelete/%uuid%/?deleteForever=no',
+    'verifyEmail' => env('APP_URL').'/api/validarmail',
     'aprobed:email' => [
         'principal' => 'wsgestor@gmail.com',
         'no:reply' => 'no-reply@aquicreamos.com',
+    ],
+    'languages' => [ 'es', 'en', 'pt_BR'],
+    'languages:principal' => 'en',
+    'status' => [
+        'inactivo' => 1,
+        'valCodEnviado' => 2,
+        'valCodAceptado' => 3,
+        'valCodRechazado' => 4,
+        'aceptado' => 5,
+        'autoRetiro' => 6,
+        'rechazado' => 7
     ],
     'metas' => [
         'meta:tags' => true,

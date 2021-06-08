@@ -10,15 +10,15 @@ use Illuminate\Queue\SerializesModels;
 class VerifyMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-    public $datas;
+    public $data;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($datas)
+    public function __construct($data)
     {
-        $this->datas = $datas;
+        $this->data = $data;
     }
 
     /**
@@ -28,7 +28,7 @@ class VerifyMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('mails.theme')->subject('Verifique su Email - Notification')->from( config('paramslist.aprobed:email.no:reply') )
+        return $this->view('mails.theme')->subject('Confirmanos tu Email - Notification')->from( config('paramslist.aprobed:email.no:reply') )
                     ->cc( config('paramslist.aprobed:email.principal') );
     }
 }

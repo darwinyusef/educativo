@@ -4,7 +4,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,8 +15,13 @@ use App\Models\User;
 |
 */
 
-Route::post('login', [AuthController::class, 'create']);
+Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'registerStore']);
+
+Route::get('validarmail/{id}', [AuthController::class, 'verifyMailShow']);
+Route::post('validarmail/{id}', [AuthController::class, 'verifyMail']);
+Route::get('autodelete/{id}', [UserController::class, 'destroy']);
+
 
 
 // para incluir en los subdominios es / en -> Route::domain('{account}.example.com')->group(function () {

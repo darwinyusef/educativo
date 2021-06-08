@@ -19,7 +19,6 @@ class MailService
     public static function sendVerifyMail($data)
     {
         $data = Arr::add($data, 'tratamiento', config('paramslist.tratamiento'));
-        $data = Arr::add($data, 'btnAction', 'Confirmar');
 
         try {
             Mail::to($data['email'])->locale('es')->send(new VerifyMail($data));

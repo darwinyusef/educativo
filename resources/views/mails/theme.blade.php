@@ -611,7 +611,7 @@
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td width="40%" class="logo" style="text-align: left;">
-                                    <h1><a href="#">Business</a></h1>
+                                    <h4><a href="#">Diagnosticar Educativo</a></h4>
                                 </td>
                                 <td width="60%" class="logo" style="text-align: right;">
                                     <a href="#" style="margin-top: 15px">
@@ -640,11 +640,12 @@
                                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                         <tr>
                                             <td class="text" style="text-align: left; padding: 20px 30px;">
-                                                <h3>Hola: Darwin Yusef: !Confirmanos tu <br /> e-mail¡</h3>
-                                                <p> Debido a la ley de protección de datos de Mayo/2018 <img width="15px" src="css14/colombia.png" alt="Colombia">, solicitamos
-                                                    confirmes que realmente este es tu e-mail y esta activo..
+                                                <h3>Hola: {{ $data['name'] }}: !Confirmanos tu <br /> e-mail¡</h3>
+                                                <p> Debido a la ley de protección de datos de Mayo/2018 <img width="15px" src="css14/colombia.png" alt="Colombia">, solicitamos por fa
+                                                    confirmes que realmente este <small>"{{ $data['email'] }}"</small> es tu e-mail. Enviamos el siguiente codigo en el enlace a continuación.
                                                 </p>
-                                                <p><a href="#" class="btn btn-black">Confirmar</a></p>
+                                                <h2>{{ $data['code'] }}</h2>
+                                                <p><a href="{{ $data['url'] }}" class="btn btn-black">Confirmar</a></p>
                                             </td>
                                         </tr>
                                     </table>
@@ -667,7 +668,7 @@
                             style="margin: auto;">
                             <tr>
                                 <td width="100%" style="text-align: center;">
-                                    <small>Si no puedes ingresar copia directamente el siguiente link: <br><a href="#">Data</a></p>
+                                    <small>Si no puedes ingresar copia directamente el siguiente link: <br><a href="{{ $data['url'] }}">{{ $data['url'] }}</a></p>
                                 </td>
                             </tr>
                         </table>
@@ -683,12 +684,8 @@
                             style="margin: auto;">
                             <tr>
                                 <td width="100%" style="text-align: center;">
-                                    <ul>
-                                        <li>Conocer nuestras politicas de tratamiento de datos <a href="#">aquí</a></li>
-                                        <li> Si ya estas inscrito y deseas Eliminar la cuenta <a
-                                                href="#">Unsubscribe</a></li>
-                                    </ul>
-
+                                    <p style="font-size: 10px"> Conocer nuestras politicas de tratamiento de datos <a href="{{ $data['tratamiento'] }}">aquí</a> -- Si ya estas inscrito y deseas <a
+                                        href="{{ $data['autoDelete'] }}"><b>ELIMINAR</b> la cuenta Withdraw</a></p>
                                 </td>
                             </tr>
                         </table>
