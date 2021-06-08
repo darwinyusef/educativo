@@ -6,11 +6,20 @@ use Illuminate\Support\Str;
 return [
     'sentry:logs' => true,
     'tratamiento' => 'http://google.com',
-    'autoDelete' => 'http://data.com/',
-    'verifyEmail' => 'http://data.com/',
+    'autoDelete' => 'http://localhost:8000/autodelete/%id%/?deleteForever=no',
+    'verifyEmail' => 'http://localhost:8000/api/validarmail',
     'aprobed:email' => [
         'principal' => 'wsgestor@gmail.com',
         'no:reply' => 'no-reply@aquicreamos.com',
+    ],
+    'languages' => [ 'es', 'en', 'pt_BR'],
+    'languages:principal' => 'en',
+    'status' => [
+        'inactivo' => 1,
+        'valCodEnviado' => 2,
+        'valCodAceptado' => 3,
+        'valCodRechazado' => 4,
+        'aceptado' => 5
     ],
     'metas' => [
         'meta:tags' => true,

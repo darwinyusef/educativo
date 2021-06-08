@@ -16,6 +16,6 @@ return [
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'email:validation' => 'You must continue the validation of your email through the ms sent to your email',
-    'send:email' => 'The confirm message has been sent successfully'
+    'email:validation' => 'Debe continuar la validación de su email a través del ms enviado a su correo',
+    'send:email' => 'El mensaje de confirmación se ha enviado correctamente'
 ];

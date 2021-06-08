@@ -50,6 +50,29 @@ class UserService
         return $this->userRepository->getById($id);
     }
 
+
+       /**
+     * Get user by id.
+     *
+     * @param $id
+     * @return String
+     */
+    public function getFind($id, $request)
+    {
+        return $this->userRepository->getByIdFilters($id, $request);
+    }
+
+       /**
+     * Get user by id.
+     *
+     * @param $id
+     * @return String
+     */
+    public function getValidateStatusTocken($id)
+    {
+        return $this->userRepository->getById($id);
+    }
+
     /**
      * Update user data
      * Store to DB if there are no errors.
