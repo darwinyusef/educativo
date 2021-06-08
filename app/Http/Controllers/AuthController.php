@@ -56,20 +56,6 @@ class AuthController extends Controller
             Log::error($mensaje);
             return response()->json($result, $result['status']);
         }
-
-
-        //return $user->createToken($request->device_name)->plainTextToken;
-
-
-
-
-
-        // if ($user) {
-        //
-        // } else {
-        //     return response()->json(['error' => 'Unauthorised'], 401);
-        // }
-        //$user->assignRole('admin');
     }
 
     public function verifyMailShow($id, Request $request)

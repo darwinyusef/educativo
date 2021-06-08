@@ -684,8 +684,8 @@
                             style="margin: auto;">
                             <tr>
                                 <td width="100%" style="text-align: center;">
-                                    <p style="font-size: 10px"> Conocer nuestras politicas de tratamiento de datos <a href="{{ $data['tratamiento'] }}">aquí</a> -- Si ya estas inscrito y deseas <b>ELIMINAR</b> la cuenta <a
-                                        href="{{ $data['autoDelete'] }}">Unsubscribe</a></p>
+                                    <p style="font-size: 10px"> Conocer nuestras politicas de tratamiento de datos <a href="{{ $data['tratamiento'] }}">aquí</a> -- Si ya estas inscrito y deseas <a
+                                        href="{{ $data['autoDelete'] }}"><b>ELIMINAR</b> la cuenta Withdraw</a></p>
                                 </td>
                             </tr>
                         </table>

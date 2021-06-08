@@ -6,6 +6,7 @@ use App\Services\UserService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Arr;
 
 class UserController extends Controller
 {
@@ -27,7 +28,7 @@ class UserController extends Controller
         $this->middleware(['permission:store:user'])->only(['store']);
         $this->middleware(['permission:collection:user'])->only(['index']);
         $this->middleware(['permission:find:user'])->only(['show']);
-        $this->middleware(['permission:delete:user'])->only(['destroy']);
+        //  $this->middleware(['permission:delete:user'])->only(['destroy']);
         $this->userService = $userService;
     }
 
@@ -120,7 +121,14 @@ class UserController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        $data = [];
         $data = $request->only(['deleteForever']);
+
+        if( substr($request->path(), 4, 10) == "autodelete" ){
+            $data = Arr::add($data, 'autodelete', true);
+            $data = Arr::add($data, 'deleteForever', 'no');
+        }
+
         $result = ['status' => 200];
         try {
             $result['data'] = $this->userService->deleteById($data, $id);
@@ -129,7 +137,12 @@ class UserController extends Controller
             Log::error($mensaje);
             $result = ['status' => 500, 'error' => $mensaje];
         }
-        return response()->json($result, $result['status']);
+
+        if( substr($request->path(), 4, 10) == "autodelete" ){
+            return redirect('/');
+        }else {
+            return response()->json($result, $result['status']);
+        }
     }
 
     /**

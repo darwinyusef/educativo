@@ -230,6 +230,10 @@ class UserRepository
     public function delete($id)
     {
         $user = $this->user->find($id);
+
+        $user->onlyDelete = 1;
+        $user->update();
+
         $user->delete();
         return $user;
     }
@@ -270,6 +274,10 @@ class UserRepository
     public function restore($id)
     {
         $user = $this->user->withTrashed()->find($id);
+
+        $user->onlyDelete = null;
+        $user->update();
+
         $user->restore();
         return $user;
     }

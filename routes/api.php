@@ -20,8 +20,8 @@ Route::post('register', [AuthController::class, 'registerStore']);
 
 Route::get('validarmail/{id}', [AuthController::class, 'verifyMailShow']);
 Route::post('validarmail/{id}', [AuthController::class, 'verifyMail']);
-
 Route::get('autodelete/{id}', [UserController::class, 'destroy']);
+
 
 
 // para incluir en los subdominios es / en -> Route::domain('{account}.example.com')->group(function () {

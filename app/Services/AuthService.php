@@ -6,7 +6,7 @@ use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Validator;
 use Exception;
 use Illuminate\Validation\ValidationException;
-
+use Illuminate\Support\Facades\Log;
 
 class AuthService
 {
@@ -29,6 +29,7 @@ class AuthService
             'password' => 'required',
         ]);
 
+
         if ($validator->fails()) {
             $mensaje = $validator->errors()->first();
             throw ValidationException::withMessages(['status' => 400, 'errors' => $mensaje, 'data' => $data])->status(400);
@@ -41,7 +42,7 @@ class AuthService
                 'name' => $user->name,
                 'email' => $user->email,
                 'code' => $user->especialParam,
-                'autoDelete' => str_replace('%id%', $user->id, config('paramslist.autoDelete')),
+                'autoDelete' => str_replace('%uuid%', $user->uuid, config('paramslist.autoDelete')),
             ];
 
             try {
@@ -50,7 +51,6 @@ class AuthService
                 MailService::sendVerifyMail($data);
                 $result = ['success' => __('auth.send:email'), 'status' => 200];
                 return $result;
-
             } catch (Exception $e) {
                 $mensaje = $e->getMessage();
                 $result = ['error' => $mensaje, 'status' => 400];
@@ -83,20 +83,25 @@ class AuthService
      * Pendiente la creación del cron verifyValidateMail ED-65
      *
      */
-    public function cronDeleteTocken(){
-
+    public function cronDeleteTocken()
+    {
     }
 
 
 
     public function tockenGenerate($user)
     {
-        $this->userRepository->changeStatus($user->id, config('paramslist.status.aceptado'));
-
-        $findUser = $this->userRepository->getById($user->uuid);
-
-        $user->tokens()->delete();
-        $success['token'] =  $user->createToken($user->nickname, ['*']);
-        return response()->json(['token' => $success['token']->plainTextToken, 'user' => $findUser], 200);
+        if ($user->status == config('paramslist.status.valCodAceptado')) {
+            $findUser = $this->userRepository->getById($user->uuid);
+            $user->tokens()->delete();
+            $success['token'] =  $user->createToken($user->nickname, ['*']);
+            // Actualiza el status a 5 para mantener al usuario en aceptado si el estatus cambia no es posible incluir otro tocken
+            $this->userRepository->changeStatus($user->id, config('paramslist.status.aceptado'));
+            return response()->json(['token' => $success['token']->plainTextToken, 'user' => $findUser], 200);
+        } else {
+            $mensaje = '[Error]: UserAuth tockenGenerate - cuenta con errores de autenticación.';
+            Log::error($mensaje);
+            return response()->json(['error' => $mensaje, 'status' => 500]);
+        }
     }
 }
