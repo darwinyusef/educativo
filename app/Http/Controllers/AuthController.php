@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Services\UserService;
+use App\Services\LocationService;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
+use App\Services\AuthService;
+
 
 class AuthController extends Controller
 {
@@ -17,39 +21,77 @@ class AuthController extends Controller
      * @param UserService $userService
      *
      */
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, LocationService $location, AuthService $authService)
     {
+        $this->location = $location;
         $this->userService = $userService;
+        $this->authService = $authService;
     }
 
-    public function index()
+
+    public function login(Request $request)
     {
-        //$listo = User::find('65465-6546-4654')->update(['password'=> bcrypt(123456)]);
-    }
+        $result = ['status' => 200];
+        //****************************** modificar
+        $user = User::where('email', $request->email)->first();
+        // Se demarca el idioma de la función
+        $this->location->validationLocale($user->language, null);
 
-    public function login()
-    {
+        $result = $this->authService->sendValidateMail($request, $user);
 
-        $user = User::where('email', 'pe@gmail.com')->first();
-
-        foreach ($user->tokens as $token) {
-           $disc =  $token->abilities[0];
+        if ($result['status'] == 200) {
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                $mensaje = __('auth.failed');
+                $result = ['error' => $mensaje, 'status' => 401];
+                return response()->json($result, $result['status']);
+            } else {
+                if ($user->email_verified_at != null) {
+                    return $this->authService->tockenGenerate($user);
+                } else {
+                    return response()->json($result, $result['status']);
+                }
+            }
+        } else {
+            $mensaje = __('auth.email:validation') . $request->email;
+            Log::error($mensaje);
+            return response()->json($result, $result['status']);
         }
-        // $rol = $user->getRoleNames();
-        //$permission = $user->getPermissionsViaRoles();
-        return  $user;
-        // if ($user) {
-        //     $success['token'] =  $user->createToken('yusefP2', ['*', 'user:create', 'user:active']);
-        //     return response()->json(['success' => $success]);
-        // } else {
-        //     return response()->json(['error' => 'Unauthorised'], 401);
-        // }
+    }
+
+    public function verifyMailShow($id, Request $request)
+    {
+
+        try {
+            $result = ['status' => 200, 'content' => $this->userService->getFind($id, $request)];
+        } catch (Exception $e) {
+            $mensaje = $e->getMessage() . ' [Error]: UserController VerifyEmail';
+            Log::error($mensaje);
+            $result = ['error' => $mensaje, 'status' => 500];
+        }
+        return response()->json($result, $result['status']);
+    }
+
+    public function verifyMail($id, Request $request)
+    {
+
+        $user = $this->userService->getFind($id, $request);
+        $this->authService->verifyValidateMail($id, $request, $user);
+
+        try {
+            $result = ['status' => 200, 'content' => $this->userService->getFind($id, $request)];
+        } catch (Exception $e) {
+            $mensaje = $e->getMessage() . ' [Error]: UserController VerifyEmail';
+            Log::error($mensaje);
+            $result = ['error' => $mensaje, 'status' => 500];
+        }
+        return response()->json($result, $result['status']);
     }
 
 
-    public function register(Request $request) {
+    public function registerStore(Request $request)
+    {
 
-        $data = $request->only(['email', 'nicname', 'status', 'password']);
+        $data = $request->only(['email', 'nickname', 'status', 'password']);
 
         try {
             $result = ['status' => 200, 'content' => $this->userService->registerUserData($data)];
@@ -59,6 +101,10 @@ class AuthController extends Controller
             $result = ['error' => $mensaje, 'status' => 500];
         }
         return response()->json($result, $result['status']);
+    }
 
+    public function mail()
+    {
+        return view('mails.theme');
     }
 }

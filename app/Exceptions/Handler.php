@@ -35,7 +35,7 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        if( config('paramslist.sentry-logs') ){
+        if( config('paramslist.sentry:logs') ){
             $this->reportable(function (Throwable $e) {
                 if ($this->shouldReport($e) && app()->bound('sentry')) {
                     app('sentry')->captureException($e);

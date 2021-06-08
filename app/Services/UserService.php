@@ -50,6 +50,29 @@ class UserService
         return $this->userRepository->getById($id);
     }
 
+
+       /**
+     * Get user by id.
+     *
+     * @param $id
+     * @return String
+     */
+    public function getFind($id, $request)
+    {
+        return $this->userRepository->getByIdFilters($id, $request);
+    }
+
+       /**
+     * Get user by id.
+     *
+     * @param $id
+     * @return String
+     */
+    public function getValidateStatusTocken($id)
+    {
+        return $this->userRepository->getById($id);
+    }
+
     /**
      * Update user data
      * Store to DB if there are no errors.
@@ -65,7 +88,7 @@ class UserService
             'lastname' => 'required|string',
             'cardId' => 'required|numeric',
             'mobile' => 'required|numeric',
-            'nicname' => 'required'
+            'nickname' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -102,7 +125,7 @@ class UserService
             'cardId' => 'required|numeric',
             'email' => 'required|unique:users|email',
             'mobile' => 'required|numeric',
-            'nicname' => 'required',
+            'nickname' => 'required',
             'password' => 'required|string|min:6'
         ]);
 
@@ -124,18 +147,28 @@ class UserService
      */
     public function deleteById($data, $id)
     {
+
         DB::beginTransaction();
+
         try {
             HelperController::validateUuid($id);
             $findUser = $this->userRepository->getById($id);
-            if ($data == []) {
-                $data['deleteForever'] = 'no';
-                $user = $this->userRepository->delete($findUser->id);
-            }
 
             if ($data['deleteForever'] == 'si') {
                 $user = $this->userRepository->totalDelete($findUser->id);
             }
+
+            if ($data == [] || $data['deleteForever'] == 'no') {
+                $data['deleteForever'] = 'no';
+                $user = $this->userRepository->delete($findUser->id);
+            }
+
+            if (in_array("autodelete", $data)) {
+
+                $this->userRepository->changeStatus($findUser->id, config('paramslist.status.autoRetiro'));
+            }
+
+
         } catch (Exception $e) {
             DB::rollBack();
             throw new InvalidArgumentException($e . 'Al borrar el usuario');
@@ -182,7 +215,7 @@ class UserService
     {
         $validator = Validator::make($data, [
             'email' => 'required|unique:users|email',
-            'nicname' => 'required',
+            'nickname' => 'required',
             'password' => 'required|string|min:6',
             'status' => 'required'
         ]);

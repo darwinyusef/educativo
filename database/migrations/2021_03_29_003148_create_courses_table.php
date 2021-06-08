@@ -20,6 +20,8 @@ class CreateCoursesTable extends Migration
             $table->string('excerpt',100)->nullable();
             $table->string('course',100)->nullable();
             $table->text('description')->nullable();
+            $table->enum('context', ['masterClass','course','tutorial','review','audit','webinar','seminar', 'conference', 'webcast','meeting','reading','mooc', 'spoc','poadcast','video', 'smallTalk']);
+            $table->enum('state', ['published', 'draft', 'pending review'])->nullable();
             $table->string('classroom')->nullable();
             $table->string('level',100)->nullable();
             $table->string('descriptionTask',100)->nullable();
@@ -28,6 +30,7 @@ class CreateCoursesTable extends Migration
             $table->integer('calification')->nullable();
             $table->integer('subject')->nullable();
             $table->string('notification',100)->nullable();
+            $table->integer('send')->nullable();
             $table->text('meta')->nullable();
             $table->text('json')->nullable();
             $table->text('html')->nullable();
