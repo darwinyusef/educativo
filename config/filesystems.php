@@ -32,13 +32,42 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => storage_path('app/public/storage'),
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'root' => public_path() . '/assets',
+            'url' => env('APP_URL') . '/assets',
+            'visibility' => 'public',
+        ],
+
+
+        'admins' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/admins',
+            'url' => env('APP_URL') . '/assets/admins',
+            'visibility' => 'public',
+        ],
+
+        'images' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/images',
+            'url' => env('APP_URL') . '/assets/images',
+            'visibility' => 'public',
+        ],
+
+        'courses' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/courses',
+            'url' => env('APP_URL') . '/assets/courses',
+            'visibility' => 'public',
+        ],
+
+        'users' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/users',
+            'url' => env('APP_URL') . '/assets/users',
             'visibility' => 'public',
         ],
 
@@ -66,7 +95,11 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('assets') => storage_path('app/public/assets'),
+        public_path('assets/admin') => storage_path('app/public/assets/admin'),
+        public_path('assets/images') => storage_path('app/public/assets/images'),
+        public_path('assets/courses') => storage_path('app/public/assets/courses'),
+        public_path('assets/users') => storage_path('app/public/assets/users'),
     ],
 
 ];

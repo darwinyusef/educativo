@@ -12,4 +12,14 @@ class Comunications extends Model
     protected $fillable = [
         'uuid', 'title', 'description', 'expiration', 'url', 'icon', 'color', 'progress', 'rol', 'param', 'html', 'json', 'language', 'status'
     ];
+
+
+    /******************
+     * Container with relationships.
+     *******************/
+
+    public function files()
+    {
+        return $this->morphToMany(Files::class, 'fileable');
+    }
 }

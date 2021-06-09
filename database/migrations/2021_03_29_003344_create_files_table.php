@@ -16,16 +16,16 @@ class CreateFilesTable extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique();
-            $table->string('file');
+            $table->string('file')->nullable();
             $table->text('description')->nullable();
             $table->string('url')->nullable();
             $table->dateTime('expiration')->nullable();
             $table->enum('type_file', ['csv', 'pdf', 'doc', 'docx', 'pps', 'ppt', 'xls', 'xlsx',
                                         'pptx', 'jpg', 'jpeg', 'gif', 'png', 'bmp', 'tiff', 'psd', 'mp3', 'mp4',
                                         '3gp','ogg', 'tar', 'zip', 'rar', '7z', 'sql'])->nullable();
-            $table->string('file_location');
-            $table->string('selecction');
-            $table->string('storage');
+            $table->string('file_location')->nullable();
+            $table->string('selecction')->nullable();
+            $table->string('storage')->nullable();
             $table->integer('parent')->nullable()->unsigned();
             $table->text('html')->nullable();
             $table->text('json')->nullable();

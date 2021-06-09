@@ -12,4 +12,14 @@ class Interactions extends Model
     protected $fillable = [
         'uuid', 'interaction', 'response', 'context', 'value', 'notification', 'users_id', 'courses_id',
     ];
+
+
+    /******************
+     * Container with relationships.
+     *******************/
+
+    public function files()
+    {
+        return $this->morphToMany(Files::class, 'fileable');
+    }
 }

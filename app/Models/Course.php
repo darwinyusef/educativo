@@ -12,4 +12,13 @@ class Course extends Model
         'uuid', 'slug', 'excerpt', 'course', 'description', 'classroom', 'level', 'descriptionTask', 'amountTask', 'calification', 'subject', 'notification', 'meta', 'json', 'html', 'status', 'parent', 'language'
     ];
 
+
+    /******************
+     * Container with relationships.
+     *******************/
+
+    public function files()
+    {
+        return $this->morphToMany(Files::class, 'fileable');
+    }
 }

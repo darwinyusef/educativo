@@ -12,4 +12,14 @@ class Params extends Model
     protected $fillable = [
         'uuid', 'param_key', 'param_value', 'slug', 'settings', 'url', 'value', 'time_in', 'time_out', 'context', 'autoload', 'frecuency', 'parent', 'especial', 'html', 'json', 'language', 'status'
     ];
+
+
+    /******************
+     * Container with relationships.
+     *******************/
+
+    public function files()
+    {
+        return $this->morphToMany(Files::class, 'fileable');
+    }
 }
