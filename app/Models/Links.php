@@ -12,4 +12,14 @@ class Links extends Model
     protected $fillable = [
         'uuid', 'url', 'name', 'description', 'notes', 'icon', 'location', 'target', 'visible', 'parent', 'param',
     ];
+
+
+    /******************
+     * Container with relationships.
+     *******************/
+
+    public function files()
+    {
+        return $this->morphToMany(Files::class, 'fileable');
+    }
 }

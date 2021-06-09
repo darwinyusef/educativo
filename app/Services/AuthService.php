@@ -91,7 +91,7 @@ class AuthService
 
     public function tockenGenerate($user)
     {
-        if ($user->status == config('paramslist.status.valCodAceptado')) {
+        if ($user->status > config('paramslist.status.valCodAceptado')) {
             $findUser = $this->userRepository->getById($user->uuid);
             $user->tokens()->delete();
             $success['token'] =  $user->createToken($user->nickname, ['*']);
@@ -101,7 +101,7 @@ class AuthService
         } else {
             $mensaje = '[Error]: UserAuth tockenGenerate - cuenta con errores de autenticación.';
             Log::error($mensaje);
-            return response()->json(['error' => $mensaje, 'status' => 500]);
+            return response()->json(['error' => $mensaje, 'status' => 401]);
         }
     }
 }

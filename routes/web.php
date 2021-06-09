@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InstalationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +21,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/primer', function () {
-    return view('welcome');
-});
-
 // prueba debug sentry
 Route::get('/debug-sentry', function () {
     throw new Exception('My first Sentry error!');
@@ -33,3 +30,9 @@ Route::get('install', [InstalationController::class, 'getInstalation']);
 
 Route::get('mail', [AuthController::class, 'mail']);
 
+
+Route::get('login', function () {
+    $mensaje = '[Error]: Actualmente no tiene permisos suficientes para acceder a la ruta '. date('l jS \of F Y h:i:s A');
+    Log::error($mensaje);
+    return response()->json(['error' => $mensaje, 'status' => 401], 401);
+})->name('login');

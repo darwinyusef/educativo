@@ -12,4 +12,14 @@ class Taxonomies extends Model
     protected $fillable = [
         'uuid', 'slug', 'taxonomy', 'description', 'meta', 'type', 'parent', 'html', 'json', 'language', 'status',
     ];
+
+
+    /******************
+     * Container with relationships.
+     *******************/
+
+    public function files()
+    {
+        return $this->morphToMany(Files::class, 'fileable');
+    }
 }

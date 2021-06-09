@@ -23,6 +23,13 @@ return [
         'autoRetiro' => 6,
         'rechazado' => 7
     ],
+    'disk:files' => [
+        'admins' => true,
+        'images' => false,
+        'public' => true,
+        'courses' => false,
+        'users' => true
+    ],
     'metas' => [
         'meta:tags' => true,
         'analitics' => true,

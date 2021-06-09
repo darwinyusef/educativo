@@ -21,6 +21,12 @@ class Post extends Model
         return 'slug';
     }
 
+
+    /******************
+     * Container with relationships.
+     *******************/
+
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -39,7 +45,7 @@ class Post extends Model
     public function scopeUuid($query, $uuid)
     {
         if ($uuid != "") {
-            $query->where("uuid", 'LIKE' ,"%$uuid%");
+            $query->where("uuid", 'LIKE', "%$uuid%");
         }
     }
 

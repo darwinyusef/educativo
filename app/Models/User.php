@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id','uuid', 'name', 'lastname', 'cardId', 'email', 'mobile', 'displayName', 'LastMs', 'slug', 'nickname', 'about', 'temporalTocken', 'onlyDelete', 'town', 'photo', 'especialParam', 'pago', 'email_verified_at', 'password', 'language',
+        'id', 'uuid', 'name', 'lastname', 'cardId', 'email', 'mobile', 'displayName', 'LastMs', 'slug', 'nickname', 'about', 'temporalTocken', 'onlyDelete', 'town', 'photo', 'especialParam', 'pago', 'email_verified_at', 'password', 'language',
     ];
 
     /**
@@ -64,7 +64,7 @@ class User extends Authenticatable
     public function scopeUuid($query, $uuid)
     {
         if ($uuid != "") {
-            $query->where("uuid", 'LIKE' ,"%$uuid%");
+            $query->where("uuid", 'LIKE', "%$uuid%");
         }
     }
     public function scopeCard($query, $number)
@@ -82,4 +82,5 @@ class User extends Authenticatable
             $query->where(DB::raw("CONCAT(name, ' ', lastname)"), 'LIKE',  "%$totalName%");
         }
     }
+
 }
