@@ -25,6 +25,27 @@ class MultimediaService
     }
 
     /**
+     * Get post by id.
+     *
+     * @param $id
+     * @return String
+     */
+    public function getById($id)
+    {
+        return $this->multimediaRepository->getById($id);
+    }
+
+    /**
+     * Get all post.
+     *
+     * @return String
+     */
+    public function getAll($request)
+    {
+        return $this->multimediaRepository->getAll($request);
+    }
+
+    /**
      *  Carga el archivo
      */
     static public function chargueFile($input_name, $request, $diskList)
@@ -60,7 +81,7 @@ class MultimediaService
     {
         $listOnly = [
             'all_files', 'file', 'description', 'url', 'expiration', 'type_file', 'file_location',
-            'storage', 'language', 'status'
+            'storage', 'language', 'status', 'model'
         ];
 
         $data = $request->only($listOnly);
@@ -77,13 +98,12 @@ class MultimediaService
             throw ValidationException::withMessages(['status' => 400, 'errors' => $mensaje, 'data' => $data])->status(400);
         }
 
-
         DB::beginTransaction();
         try {
             $this->multimediaRepository->save($data);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new InvalidArgumentException($e.' No se a actualizado el documento pero se ha cargado correctamente el archivo');
+            throw new InvalidArgumentException($e . ' No se a actualizado el documento pero se ha cargado correctamente el archivo');
         }
         DB::commit();
     }
@@ -100,10 +120,8 @@ class MultimediaService
     }
 
 
-    static public function updateFile(
-        $input_,
-        $request
-    ) {
+    static public function updateFile($input_name, $request)
+    {
         $file = $request->file($input_name);
         $archivo = $request['imgOld'];
 
@@ -130,19 +148,21 @@ class MultimediaService
     }
 
 
-     /**
+    /**
      * Delete post by id.
      *
      * @param $id
      * @return String
      */
-    public function deleteById($id)
+    public function deleteById($data, $id)
     {
         DB::beginTransaction();
         try {
-            HelperController::validateUuid($id);
+            //HelperController::validateUuid($id);
+            dd(HelperController::validateUuid($id));
             $findMultimedia = $this->multimediaRepository->getById($id);
-            $file = $this->postRepository->delete( $findMultimedia->id );
+            dd($findMultimedia);
+            $file = $this->postRepository->delete($findMultimedia->id);
         } catch (Exception $e) {
             DB::rollBack();
             throw new InvalidArgumentException($e . 'Al borrar el archivo');

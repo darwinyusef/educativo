@@ -32,13 +32,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('users', UserController::class)->names('user');
     Route::get('users/{uuid}/restore', [UserController::class, 'restore']);
 
-    Route::post('files', [MultimediaController::class, 'cargando']);
-    Route::delete('files/{uuid}', [MultimediaController::class, 'delete']);
+    Route::resource('files', MultimediaController::class)->names('files');
+    Route::get('files/{uuid}/restore', [MultimediaController::class, 'restore']);
+    Route::post('files/cargando', [MultimediaController::class, 'cargando']);
 
-    Route::get('/pruebita', function(){
+
+
+    Route::get('/pruebita', function () {
         return 'Entramos sin problemas con sactrum';
     });
 });
-
-
-

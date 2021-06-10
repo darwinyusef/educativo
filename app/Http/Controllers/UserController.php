@@ -23,12 +23,12 @@ class UserController extends Controller
      */
     public function __construct(UserService $userService)
     {
-        $this->middleware(['permission:update:user'])->only(['update']);
-        $this->middleware(['permission:restore:user'])->only(['restore']);
-        $this->middleware(['permission:store:user'])->only(['store']);
-        $this->middleware(['permission:collection:user'])->only(['index']);
         $this->middleware(['permission:find:user'])->only(['show']);
-        //  $this->middleware(['permission:delete:user'])->only(['destroy']);
+        $this->middleware(['permission:collection:user'])->only(['index']);
+        $this->middleware(['permission:store:user'])->only(['store']);
+        $this->middleware(['permission:update:user'])->only(['update']);
+        $this->middleware(['permission:delete:user', 'permission:auto.delete:user'])->only(['destroy']);
+        $this->middleware(['permission:restore:user'])->only(['restore']);
         $this->userService = $userService;
     }
 

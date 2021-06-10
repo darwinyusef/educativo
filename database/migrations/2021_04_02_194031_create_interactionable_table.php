@@ -16,7 +16,8 @@ class CreateInteractionableTable extends Migration
         Schema::create('interactionable', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique();
-            $table->integer('interactionable_id')->unsigned()->nullable();
+            $table->integer('interactions_id')->unsigned()->nullable();
+            $table->integer('interactionable_id')->nullable();
             $table->string('interactionable_type')->nullable();
             $table->timestamps();
             $table->softDeletes();

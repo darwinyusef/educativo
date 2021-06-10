@@ -32,7 +32,8 @@ class UserResource extends JsonResource
             'html' => $this->html,
             'language' => $this->language,
             'status' => $this->status,
-            'permission' =>  $this->getPermissionsViaRoles()
+           // 'rol' =>  $this->getRoleNames(),
+           // 'permission' =>  $this->getPermissionsViaRoles()
         ];
 
     }

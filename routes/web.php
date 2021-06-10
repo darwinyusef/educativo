@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InstalationController;
+use App\Http\Controllers\MultimediaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
@@ -26,6 +27,7 @@ Route::get('/debug-sentry', function () {
     throw new Exception('My first Sentry error!');
 });
 
+// Elegir dentro del controlador las tablas a instalar
 Route::get('install', [InstalationController::class, 'getInstalation']);
 
 Route::get('mail', [AuthController::class, 'mail']);
@@ -36,3 +38,6 @@ Route::get('login', function () {
     Log::error($mensaje);
     return response()->json(['error' => $mensaje, 'status' => 401], 401);
 })->name('login');
+
+
+Route::get('files/{id}', [MultimediaController::class, 'show']);
