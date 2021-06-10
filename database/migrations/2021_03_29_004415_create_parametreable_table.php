@@ -13,12 +13,12 @@ class CreateParametreableTable extends Migration
      */
     public function up()
     {
-        Schema::create('parametreable', function (Blueprint $table) {
+        Schema::create('parameterable', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique();
             $table->integer('parameters_id')->unsigned()->nullable();
-            $table->integer('parameteable_id')->nullable();
-            $table->string('parameteable_type')->nullable();
+            $table->integer('parameterable_id')->nullable();
+            $table->string('parameterable_type')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +31,6 @@ class CreateParametreableTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parametreable');
+        Schema::dropIfExists('parameterable');
     }
 }

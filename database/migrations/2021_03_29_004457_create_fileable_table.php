@@ -16,9 +16,9 @@ class CreateFileableTable extends Migration
         Schema::create('fileable', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique();
-            $table->integer('fileables_id')->unsigned()->nullable();
-            $table->integer('fileableable_id')->nullable();
-            $table->string('fileableable_type')->nullable();
+            $table->integer('files_id')->unsigned()->nullable();
+            $table->integer('fileable_id')->nullable();
+            $table->string('fileable_type')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

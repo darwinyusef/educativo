@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cookie;
 
 class AuthService
 {
@@ -87,17 +88,37 @@ class AuthService
     {
     }
 
-
-
     public function tockenGenerate($user)
     {
         if ($user->status > config('paramslist.status.valCodAceptado')) {
             $findUser = $this->userRepository->getById($user->uuid);
             $user->tokens()->delete();
-            $success['token'] =  $user->createToken($user->nickname, ['*']);
+            // obtiene roles y permisos y los incluye en una cookie que dura 3 horas, tambien se incluyen en el tocken de la BD
+            $getPermissions = $user->getAllPermissions();
+            $getRoles = $user->getRoleNames();
+            foreach ($getPermissions as $key => $value) {
+                $permissions[] = [$value->name];
+            }
+            $policies =  ['rol' => $getRoles, 'permissions' => $permissions];
+
+            $success['token'] =  $user->createToken($user->nickname, ['policies' => $policies]);
             // Actualiza el status a 5 para mantener al usuario en aceptado si el estatus cambia no es posible incluir otro tocken
             $this->userRepository->changeStatus($user->id, config('paramslist.status.aceptado'));
-            return response()->json(['token' => $success['token']->plainTextToken, 'user' => $findUser], 200);
+            $sendFinal = [
+                'token' => $success['token']->plainTextToken,
+                'user' => [
+                    "id" => $findUser->id,
+                    "uuid" => $findUser->uuid,
+                    "cardId" => $findUser->cardId,
+                    "fullName" => $findUser->name.' '.$findUser->lastname,
+                    "email" => $findUser->email,
+                    "nickname" => $findUser->nickname,
+                    "language" => $findUser->language,
+                    "status" => $findUser->status
+                ],
+                'policies' => $policies
+            ];
+            return response($sendFinal)->cookie('policies', json_encode($sendFinal), 380);
         } else {
             $mensaje = '[Error]: UserAuth tockenGenerate - cuenta con errores de autenticación.';
             Log::error($mensaje);

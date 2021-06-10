@@ -4,16 +4,44 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Files extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'uuid', 'file', 'description',
         'url', 'expiration', 'type_file', 'file_location', 'selecction',
         'storage', 'parent', 'html', 'json', 'language', 'status'
     ];
+
+    /******************
+     * Container with scopes.
+     *******************/
+
+    public function scopeUuid($query, $uuid)
+    {
+        if ($uuid != "") {
+            $query->where("uuid", 'LIKE', "%$uuid%");
+        }
+    }
+
+    public function scopeFile($query, $file)
+    {
+        if ($file != "") {
+            $query->where("file", 'LIKE', "%$file%")->orWhere("description", 'LIKE', "%$file%");
+        }
+    }
+
+    public function scopeTypeFile($query, $typeFile)
+    {
+        if ($typeFile != "") {
+            $query->where("type_file", 'LIKE', "%$typeFile%");
+        }
+    }
+
 
 
 

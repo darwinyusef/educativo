@@ -4,12 +4,17 @@ namespace App\Repositories;
 
 use App\Http\Resources\MultimediaCollection;
 use App\Http\Resources\MultimediaResource;
+
+use App\Services\ModelService;
+
 use App\Models\Files;
+use App\Models\User;
 
 use Illuminate\Support\Str;
 
 class MultimediaRepository
 {
+    protected $users;
     protected $files;
     protected $paginate = 10;
 
@@ -18,8 +23,9 @@ class MultimediaRepository
      *
      * @param User $files
      */
-    public function __construct(Files $files)
+    public function __construct(Files $files, User $users)
     {
+        $this->users = $users;
         $this->files = $files;
         $this->paginate = 10;
     }
@@ -35,10 +41,10 @@ class MultimediaRepository
             $this->paginate = $request->paginate;
         }
 
-        return new FilesCollection(
+        return new MultimediaCollection(
             $this->files
-                ->card($request->card)
-                ->name($request->name)
+                ->file($request->title)
+                ->typeFile($request->mimes)
                 ->paginate($this->paginate)
         );
     }
@@ -52,25 +58,9 @@ class MultimediaRepository
     public function getById($id)
     {
         $find = $this->files->uuid($id)->select('id', 'uuid')->get();
-        return new FilesResource($this->files->find($find[0]->id));
+        return new MultimediaResource($this->files->find($find[0]->id));
     }
 
-
-    /**
-     * Get files by id + filters
-     *
-     * @param $id
-     * @return mixed
-     */
-    public function getByIdFilters($id, $request)
-    {
-        $find = $this->files->find($id);
-        if ($request->email != null) {
-            $find = $this->files->where('email', $request->email)->get();
-            return $this->files->find($find[0]->id);
-        }
-        return $find;
-    }
 
     /**
      * Save Files
@@ -80,6 +70,8 @@ class MultimediaRepository
      */
     public function save($data)
     {
+        $model = $data['model'];
+
         $files = new $this->files;
 
         $files->uuid = Str::uuid();
@@ -94,6 +86,20 @@ class MultimediaRepository
         $files->status = 1;
         $files->save();
 
+        if ($model != null) {
+            $arrayModel = explode('|', $model);
+            // llamamos el servicio de models este nos genera una creación en todas las tablas de tipo ++able
+            $modelService = new ModelService;
+            $modelData = $modelService->assing($arrayModel[0], $files->save()->id);
+            $consult = [
+                'table' => 'file',
+                'id_table' => $files->save()->id,
+                'id_model' => $arrayModel[1],
+                'model' => get_class($modelData)
+            ];
+            $modelService->chargueModels($consult);
+        }
+
         return $files->fresh();
     }
 
@@ -106,9 +112,9 @@ class MultimediaRepository
      */
     public function delete($id)
     {
-        dd($id);
         $files = $this->files->find($id);
         $files->delete();
+
         return $files;
     }
 }

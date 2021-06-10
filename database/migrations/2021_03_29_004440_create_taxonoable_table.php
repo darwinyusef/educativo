@@ -16,9 +16,9 @@ class CreateTaxonoableTable extends Migration
         Schema::create('taxonoable', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique();
-            $table->integer('taxonoables_id')->unsigned()->nullable();
-            $table->integer('taxonoableable_id')->nullable();
-            $table->string('taxonoableable_type')->nullable();
+            $table->integer('taxonos_id')->unsigned()->nullable();
+            $table->integer('taxonoable_id')->nullable();
+            $table->string('taxonoable_type')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

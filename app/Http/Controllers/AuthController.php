@@ -103,8 +103,4 @@ class AuthController extends Controller
         return response()->json($result, $result['status']);
     }
 
-    public function mail()
-    {
-        return view('mails.theme');
-    }
 }
