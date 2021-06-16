@@ -35,7 +35,7 @@ class PostFactory extends Factory
             'state' => 'published',
             'time_in' => $this->faker->date('Y-m-d H:i:s', 'now'),
             'time_out' => $this->faker->date('Y-m-d H:i:s', 'now'),
-            'user_id' => $this->faker->numberBetween(0, 10),
+            'user_id' => $this->faker->numberBetween(1, 10),
             'notification' => null,
             'meta' => null,
             'json' => null,

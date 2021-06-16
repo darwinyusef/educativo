@@ -21,6 +21,9 @@ class CreateInteractionsTable extends Migration
             $table->text('response')->nullable();
             $table->text('context')->nullable();
             $table->integer('value')->nullable();
+            $table->integer('rating')->nullable();
+            $table->mediumText('confParameter')->nullable(); // expone el tipo de interacción ej(Notas, preguntas, calificaciones, respuesta, ver|archivo, ver|video, ver|leer, ver|comunicar, ver|reunion, descargar, leer, contenido,  )
+            $table->string('rol')->nullable();
             $table->string('notification', 100)->nullable();
             $table->text('meta')->nullable();
             $table->text('json')->nullable();

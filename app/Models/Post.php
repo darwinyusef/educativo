@@ -13,7 +13,7 @@ class Post extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'uuid', 'slug', 'excerpt', 'title', 'content', 'views', 'password', 'url', 'context', 'state', 'time_in', 'time_out', 'parent', 'user_id', 'notification', 'meta', 'json', 'html', 'status', 'parent', 'language'
+        'id', 'uuid', 'slug', 'excerpt', 'title', 'content', 'views', 'password', 'url', 'context', 'state', 'time_in', 'time_out', 'parent', 'user_id', 'notification', 'meta', 'json', 'html', 'status', 'parent', 'language'
     ];
 
     public function getRouteKeyName()

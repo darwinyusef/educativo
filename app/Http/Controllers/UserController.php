@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\UserService;
+use App\Services\PermissionsService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -21,14 +22,15 @@ class UserController extends Controller
      * @param UserService $userService
      *
      */
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, PermissionsService $acPermission)
     {
-        $this->middleware(['permission:find:user'])->only(['show']);
-        $this->middleware(['permission:collection:user'])->only(['index']);
-        $this->middleware(['permission:store:user'])->only(['store']);
-        $this->middleware(['permission:update:user'])->only(['update']);
-        $this->middleware(['permission:delete:user', 'permission:auto.delete:user'])->only(['destroy']);
-        $this->middleware(['permission:restore:user'])->only(['restore']);
+        $this->middleware([$acPermission->validatePermission('find:user')])->only(['show']);
+        $this->middleware([$acPermission->validatePermission('collection:user')])->only(['index']);
+        $this->middleware([$acPermission->validatePermission('store:user')])->only(['store']);
+        $this->middleware([$acPermission->validatePermission('update:user')])->only(['update']);
+        $this->middleware([$acPermission->validatePermission('delete:user')])->only(['destroy']);
+        $this->middleware([$acPermission->validatePermission('auto.delete:user')])->only(['destroy']);
+        $this->middleware([$acPermission->validatePermission('restore:user')])->only(['restore']);
         $this->userService = $userService;
     }
 
@@ -57,8 +59,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->only(['name', 'lastname', 'cardId', 'email', 'mobile',
-         'displayName', 'nickname', 'about', 'password']);
+        $data = $request->only([
+            'name', 'lastname', 'cardId', 'email', 'mobile',
+            'displayName', 'nickname', 'about', 'password'
+        ]);
 
         $result = ['status' => 200];
         try {
@@ -124,7 +128,7 @@ class UserController extends Controller
         $data = [];
         $data = $request->only(['deleteForever']);
 
-        if( substr($request->path(), 4, 10) == "autodelete" ){
+        if (substr($request->path(), 4, 10) == "autodelete") {
             $data = Arr::add($data, 'autodelete', true);
             $data = Arr::add($data, 'deleteForever', 'no');
         }
@@ -138,9 +142,9 @@ class UserController extends Controller
             $result = ['status' => 500, 'error' => $mensaje];
         }
 
-        if( substr($request->path(), 4, 10) == "autodelete" ){
+        if (substr($request->path(), 4, 10) == "autodelete") {
             return redirect('/');
-        }else {
+        } else {
             return response()->json($result, $result['status']);
         }
     }

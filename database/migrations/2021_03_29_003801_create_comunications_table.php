@@ -24,6 +24,7 @@ class CreateComunicationsTable extends Migration
             $table->string('icon')->nullable();
             $table->string('color')->nullable();
             $table->integer('progress')->nullable();
+            $table->mediumText('confParameter')->nullable(); // expone el tipo de interacción ej(Notas, preguntas, calificaciones, respuesta, ver|archivo, ver|video, ver|leer, ver|comunicar, ver|reunion, descargar, leer, contenido,  )
             $table->string('rol')->nullable();
             $table->string('param')->nullable();
             $table->text('html')->nullable();

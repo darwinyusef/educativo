@@ -12,7 +12,7 @@ class Files extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'uuid', 'file', 'description',
+        'id', 'uuid', 'file', 'description',
         'url', 'expiration', 'type_file', 'file_location', 'selecction',
         'storage', 'parent', 'html', 'json', 'language', 'status'
     ];

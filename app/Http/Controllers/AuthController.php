@@ -60,7 +60,6 @@ class AuthController extends Controller
 
     public function verifyMailShow($id, Request $request)
     {
-
         try {
             $result = ['status' => 200, 'content' => $this->userService->getFind($id, $request)];
         } catch (Exception $e) {

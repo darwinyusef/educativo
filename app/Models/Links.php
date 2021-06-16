@@ -10,7 +10,7 @@ class Links extends Model
     use HasFactory;
 
     protected $fillable = [
-        'uuid', 'url', 'name', 'description', 'notes', 'icon', 'location', 'target', 'visible', 'parent', 'param',
+        'id', 'uuid', 'url', 'name', 'description', 'notes', 'icon', 'location', 'target', 'visible', 'parent', 'param',
     ];
 
 
