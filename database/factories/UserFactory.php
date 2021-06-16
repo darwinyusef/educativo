@@ -40,9 +40,10 @@ class UserFactory extends Factory
             'photo' => $this->faker->imageUrl(400, 400),
             'especialParam' => null,
             'pago' => null,
+            'status' => 5,
             'email_verified_at' => now(),
             'password' => bcrypt(123456),
-            'language' => 'en,es'
+            'language' => 'es'
         ];
     }
 

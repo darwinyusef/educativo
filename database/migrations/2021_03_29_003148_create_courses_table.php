@@ -20,7 +20,7 @@ class CreateCoursesTable extends Migration
             $table->string('excerpt',100)->nullable();
             $table->string('course',100)->nullable();
             $table->text('description')->nullable();
-            $table->enum('context', ['masterClass','course','tutorial','review','audit','webinar','seminar', 'conference', 'webcast','meeting','reading','mooc', 'spoc','poadcast','video', 'smallTalk']);
+            $table->enum('context', ['masterClass','course','tutorial','review','audit','webinar','seminar', 'conference', 'webcast','meeting','reading','mooc', 'spoc','poadcast','video', 'smallTalk'])->nullable();
             $table->enum('state', ['published', 'draft', 'pending review'])->nullable();
             $table->string('classroom')->nullable();
             $table->string('level',100)->nullable();

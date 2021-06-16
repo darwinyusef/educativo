@@ -10,9 +10,8 @@ class Content extends Model
     use HasFactory;
 
     protected $fillable = [
-        'uuid', 'content', 'description', 'slug', 'password', 'calification', 'excerpt', 'view', 'order', 'urlInbox', 'timeIn', 'timeOut', 'confParameter', 'assing', 'classroom', 'classroomText', 'address', 'timeLine', 'meta', 'json', 'html', 'status', 'parent', 'language'
+        'id',  'uuid', 'content', 'description', 'slug', 'password', 'value', 'rating', 'excerpt', 'view', 'order', 'urlInbox', 'timeIn', 'timeOut', 'confParameter', 'rol', 'assing', 'classroom', 'classroomText', 'address', 'timeLine', 'send', 'meta', 'json', 'html', 'status', 'parent', 'language'
     ];
-
 
     /******************
      * Container with relationships.

@@ -33,11 +33,13 @@ class CreateUsersTable extends Migration
             $table->char('especialParam')->nullable();
             $table->char('pago')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->text('html')->nullable();
             $table->text('json')->nullable();
             $table->string('language')->nullable();
             $table->boolean('status')->nullable();
+            $table->string('msAndroidTocken')->nullable();
+            $table->string('msIosTocken')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

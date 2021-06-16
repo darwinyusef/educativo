@@ -20,14 +20,16 @@ class CreateContentsTable extends Migration
             $table->text('description')->nullable();
             $table->string('slug')->nullable();
             $table->string('password',100)->nullable();
-            $table->string('calification')->nullable();
+            $table->string('value')->nullable();
+            $table->string('rating')->nullable();
             $table->string('excerpt',100)->nullable();
             $table->string('view',100)->nullable();
             $table->integer('order')->nullable();
             $table->string('urlInbox')->nullable();
             $table->dateTime('timeIn')->nullable();
             $table->dateTime('timeOut')->nullable();
-            $table->text('confParameter')->nullable();
+            $table->mediumText('confParameter')->nullable(); // Indica el tipo bajo parametro de contenido ej(investigación, pregunta, video|Multimedia, guia, introducción, archivo|recurso, contenido, tarea)
+            $table->string('rol')->nullable();
             $table->string('assing')->nullable();
             $table->string('classroom')->nullable();
             $table->string('classroomText')->nullable();

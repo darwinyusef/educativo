@@ -10,8 +10,9 @@ class Comunications extends Model
     use HasFactory;
 
     protected $fillable = [
-        'uuid', 'title', 'description', 'expiration', 'url', 'icon', 'color', 'progress', 'rol', 'param', 'html', 'json', 'language', 'status'
+        'id', 'uuid', 'title', 'description', 'expiration', 'url', 'target', 'icon', 'color', 'progress', 'confParameter', 'rol', 'param', 'html', 'json', 'language', 'status'
     ];
+
 
 
     /******************

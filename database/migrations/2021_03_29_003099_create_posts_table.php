@@ -18,8 +18,8 @@ class CreatePostsTable extends Migration
             $table->string('uuid')->unique();
             $table->string('slug',100)->nullable();
             $table->string('excerpt',100)->nullable();
-            $table->string('title');
-            $table->text('content');
+            $table->string('title')->nullable();
+            $table->text('content')->nullable();
             $table->integer('views')->nullable();
             $table->string('password')->nullable();
             $table->string('url')->nullable();
@@ -35,8 +35,8 @@ class CreatePostsTable extends Migration
             $table->integer('parent')->nullable();
             $table->string('language')->nullable();
             $table->integer('send')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

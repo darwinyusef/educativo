@@ -21,25 +21,27 @@ class LocationService
         App::setLocale($user);
     }
 
-    public function validationLocale($user, $domain){
-
-        if($user == null && $domain != null){
-            if( in_array($domain, config('paramslist.languages')) ){
+    public function validationLocale($user, $domain)
+    {
+        if ($user == null && $domain != null) {
+            if (in_array($domain, config('paramslist.languages'))) {
                 return $this->domainLocale($domain);
             } else {
                 abort(404);
             }
-        } else if($user != null && $domain == null){
-            if( in_array($user, config('paramslist.languages')) ){
+        } else if ($user != null && $domain == null) {
+            if (in_array($user, config('paramslist.languages'))) {
+                if ($user == 'en,es') {
+                    return $this->userLocale('en');
+                }
                 return $this->userLocale($user);
             } else {
                 abort(404);
             }
-        }else if($user == null && $domain == null){
+        } else if ($user == null && $domain == null) {
             App::setLocale(config('paramslist.languages:principal'));
-        } else if($user != null && $domain != null){
+        } else if ($user != null && $domain != null) {
             App::setLocale(config('paramslist.languages:principal'));
         }
     }
-
 }

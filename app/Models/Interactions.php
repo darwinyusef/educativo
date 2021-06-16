@@ -10,9 +10,8 @@ class Interactions extends Model
     use HasFactory;
 
     protected $fillable = [
-        'uuid', 'interaction', 'response', 'context', 'value', 'notification', 'users_id', 'courses_id',
+        'id', 'uuid', 'slug', 'interaction', 'response', 'context', 'value', 'rating', 'confParameter', 'rol', 'notification', 'meta', 'json', 'html', 'status', 'parent', 'language'
     ];
-
 
     /******************
      * Container with relationships.

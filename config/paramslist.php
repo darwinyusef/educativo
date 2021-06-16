@@ -12,7 +12,7 @@ return [
         'principal' => 'wsgestor@gmail.com',
         'no:reply' => 'no-reply@aquicreamos.com',
     ],
-    'languages' => [ 'es', 'en', 'pt_BR'],
+    'languages' => [ 'en,es', 'es', 'en', 'pt_BR'],
     'languages:principal' => 'en',
     'status' => [
         'inactivo' => 1,

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstalationController;
 use App\Http\Controllers\MultimediaController;
 use App\Http\Controllers\UserController;
@@ -41,3 +42,4 @@ Route::get('login', function () {
 
 
 Route::get('files/{id}', [MultimediaController::class, 'show']);
+
